@@ -1,23 +1,26 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "grille.h"
+#include "jeu.h"
 
 int main()
 {
-    printf("Demineur\n");
+    srand(time(NULL)); // Init rand avec le le nombre de secondes écoulées depuis le premier janvier 1970 au moment du lancement
+    printf("--------------------- DEMINEUR ---------------------\n");
 
     int nbCols;
     int nbRows;
 
-    printf("nb lignes ? \n");
+    printf("Veuillez choisir un nombre de lignes (max : 8) :  \n");
     scanf("%d",&nbRows);
 
-    printf("nb colonnes ? \n");
+    printf("Veuillez choisir un nombre de colonnes (max : 8) : \n");
     scanf("%d",&nbCols);
 
-    if(nbRows >= 0 && nbRows < 32)
+    if(nbRows > 0 && nbRows <= 8)
     {
-        if(nbCols >= 0 && nbCols < 32)
+        if(nbCols > 0 && nbCols <= 8)
         {
             Liste *maGrille = initialisation(nbRows, nbCols);
             int r;
@@ -26,11 +29,18 @@ int main()
             {      
                 for(c = 0; c < nbCols; c++)
                 {
-                    insertion(maGrille, r, c, 'n',isMined());
+                    if(r == 0 && c == 0)
+                    {
+                        ++c;
+                        insertion(maGrille, r, c, 'c',isMined());
+                    }
+                    else
+                        insertion(maGrille, r, c, 'c',isMined());
                 }                
             }
-
+            printf("La partie commence ! \n\n\n");
             afficherGrille(maGrille);
+            Play(nbRows, nbCols, maGrille);
         }
     }
     else
@@ -39,5 +49,4 @@ int main()
         exit(0);
     }
     return 0;
-
 }
