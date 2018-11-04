@@ -1,2 +1,2 @@
 # DemineurC
-A little minesweeper project
+Démineur pour notre projet scolaire dans le cadre de notre licence pro ACSID
