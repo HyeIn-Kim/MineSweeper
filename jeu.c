@@ -11,13 +11,13 @@ void Play(int row, int col, Liste *grille)
 
 		int caseJoue = 0;
 		int casesMax = row * col; //Nombres max de cases jouables dans la grille
-		scanf_s("%d", &caseJoue);
+		scanf("%d", &caseJoue);
 		printf("\n\n\n\n");
 		if (caseJoue > 0 && caseJoue <= casesMax) // Le joueur doit entrer une valeur supérieur à 0 et inférieur ou égale à la taille maximal de la grille
 		{
 			printf("Veuillez decider d'une action sur cette case : \n 1 - Ouvrir la case \n 2 - Mettre un drapeau sur la case \n");
 			int choix;
-			scanf_s("%d", &choix);
+			scanf("%d", &choix);
 
 			Element *caseATrouver = NULL;
 

@@ -15,10 +15,10 @@ int main()
 	int nbRows;
 
 	printf("Veuillez choisir un nombre de lignes (max : %d) :  \n",GRILLEMAX);
-	scanf_s("%d", &nbRows);
+	scanf("%d", &nbRows);
 
 	printf("Veuillez choisir un nombre de colonnes (max : %d) : \n",GRILLEMAX);
-	scanf_s("%d", &nbCols);
+	scanf("%d", &nbCols);
 
 	if (nbRows > 0 && nbRows <= GRILLEMAX)
 	{
