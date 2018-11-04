@@ -1,171 +1,231 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "grille.h"
+#include "jeu.h"
 
 Liste *initialisation(int _nbRow, int _nbCol)
 {
-    Liste *grille = malloc(sizeof(*grille));
-    Element *element = malloc(sizeof(*element));
+	Liste *grille = malloc(sizeof(*grille));
+	Element *element = malloc(sizeof(*element));
 
-    if(grille == NULL || element == NULL)
-    {
-       exit(EXIT_FAILURE);
-    }
+	if (grille == NULL || element == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 
-    element->row = 0;
-    element->col = 0;
-    element->statut = 'c';
-    element->mine = 0;
-    element->numCase = 1;
-    element->suivant = NULL;
+	element->row = 0;
+	element->col = 0;
+	element->statut = 'c';
+	element->mine = isMined();
+	element->numCase = 1;
+	element->suivant = NULL;
 
-    grille->premier = element; // le premier element de la grille est element que l'on vient de créer
-    grille->nbRow = _nbRow; // On récupère le nombre de ligne que l'utilisateur à choisi et on l'insert dans les infos de la Grille    
-    grille->nbCol = _nbCol; // On récupère le nombre de colonnes que l'utilisateur à choisi et on l'insert dans les infos de la Grille
-    grille->nbCases = 1; // On met le nombre de case de la grille égale à 1 car on vient de créer une case
+	grille->premier = element; // le premier element de la grille est element que l'on vient de créer
+	grille->dernier = element; // le dernier element de la grille est element que l'on vient de créer
+	grille->nbRow = _nbRow;    // On récupère le nombre de ligne que l'utilisateur à choisi et on l'insert dans les infos de la Grille
+	grille->nbCol = _nbCol;    // On récupère le nombre de colonnes que l'utilisateur à choisi et on l'insert dans les infos de la Grille
+	grille->nbCases = 1;       // On met le nombre de case de la grille égale à 1 car on vient de créer une case
 
-    return grille;
+	return grille;
 }
 
 int isMined()
-{    
-    int random = rand() % 100; // aléatoire entre 0 et 100;
-    if(random > 50) // si > à 50 on dit qu'il y a une mine
-    {
-        return 1;
-    }
-    return 0; // sinon on retroune qu'il n'y a pas de mine dans cette case
+{
+	int random = rand() % 100; // aléatoire entre 0 et 100;
+	if (random > 50)           // si > à 50 on dit qu'il y a une mine
+	{
+		return 1;
+	}
+	return 0; // sinon on retroune qu'il n'y a pas de mine dans cette case
 }
 
-void insertion(Liste *grille, int _row, int _col, char _statut, int _mine) // Insertion d'un élément au début de la grille
+void insertionFin(Liste *grille, int _row, int _col, char _statut, int _mine)
 {
-    /* Création du nouvelle case */
-    Element *nouvelleCase = malloc(sizeof(*nouvelleCase));
-    if(grille == NULL || nouvelleCase == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
+	Element *nouvelleCase = malloc(sizeof(*nouvelleCase));
 
-    nouvelleCase->row = _row;
-    nouvelleCase->col = _col;
-    nouvelleCase->statut = _statut;
-    nouvelleCase->mine = _mine;
-    nouvelleCase->numCase = grille->nbCases;
+	if (grille == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 
-    /* Insertion de l'élement au début de la liste */
-    nouvelleCase->suivant = grille->premier;
-    grille->premier = nouvelleCase;
-    grille->nbCases++;
+	// On initialise notre nouvelle case
+	nouvelleCase->row = _row;
+	nouvelleCase->col = _col;
+	nouvelleCase->statut = _statut;
+	nouvelleCase->mine = _mine;
+	nouvelleCase->numCase = grille->nbCases + 1;
+	nouvelleCase->suivant = NULL;
+
+	
+	grille->dernier->suivant = nouvelleCase; // On change le NULL du dernier élement de la liste et on le fait pointer sur notre élement
+	grille->dernier = nouvelleCase; // Le dernier élément est égal à notre élement
+	grille->nbCases++; // augmente le compteur d'élement de la liste de 1
 }
 
-void suppression(Liste *grille)
+void insertionDebut(Liste *grille, int _row, int _col, char _statut, int _mine) // Insertion d'un élément au début de la grille
 {
-    if(grille == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
+	/* Création du nouvelle case */
+	Element *nouvelleCase = malloc(sizeof(*nouvelleCase));
+	if (grille == NULL || nouvelleCase == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 
-    if(grille->premier != NULL)
-    {
-        Element *aSupprimer = grille->premier;
-        grille->premier = grille->premier->suivant;
-        free(aSupprimer);
-    }
+	nouvelleCase->row = _row;
+	nouvelleCase->col = _col;
+	nouvelleCase->statut = _statut;
+	nouvelleCase->mine = _mine;
+	nouvelleCase->numCase = grille->nbCases + 1;
+
+	/* Insertion de l'élement au début de la liste */
+	nouvelleCase->suivant = grille->premier;
+	grille->premier = nouvelleCase;
+	grille->nbCases++; // augmente le compteur d'élement de la liste de 1
 }
 
-void afficherGrille(Liste *grille)
+void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 {
-    if(grille == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
+	if (grille == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 
-    Element *actuel = grille->premier;
-    int compteur = grille->nbCases;
-    while(actuel != NULL)
-    { 
-        if(actuel->statut == 'c')
-        {
-            if(actuel->row > actuel->suivant->row)
-            {                    
-                printf("|%d|",actuel->numCase);
-                printf("\n");
-            }
-            else
-            {
-                printf("|%d|",actuel->numCase);
-            }
-        }
-        // switch (actuel->statut) Probleme avec ça verifier d'où ça vient
-        // {
-        //     case 'c':
-        //         if(actuel->row > actuel->suivant->row)
-        //         {                    
-        //             printf("|%d|",actuel->numCase);
-        //             printf("\n");
-        //         }
-        //         else
-        //         {
-        //             printf("|%d|",actuel->numCase);
-        //         }
-        //         break;
-        //     case 'f':
-        //         if(actuel->row > actuel->suivant->row)
-        //         {
-        //             printf("|F|");
-        //             printf("\n");
-        //         }
-        //         else
-        //         {
-        //             printf("|F|");
-        //         }                
-        //         break;
-        //     case 'o':
-        //         if(actuel->row > actuel->suivant->row)
-        //         {
-        //             if(actuel->mine == 1)
-        //             {
-        //                 printf("|X|");
-        //                 printf("\n");
-        //             }
-        //         }
-        //         else
-        //         {
-        //             if(actuel->mine == 1)
-        //             {
-        //                 printf("|X|");
-        //             }
-        //         }                 
-        //     default:
-        //         printf("Erreur case");
-        //         break;
-        // }
-        printf("case %d , ligne : %d // col : %d // statut : %c // isMined : %d\n \n", compteur, actuel->row, actuel->col, actuel->statut, actuel->mine); // FOR DEBUG
-        actuel = actuel->suivant;
-        compteur--;
-    }
+	Element *actuel = grille->premier;
+
+	while (actuel != NULL)
+	{
+		switch (actuel->statut)
+		{
+		case 'c':
+			if (actuel->suivant != NULL)
+			{
+				if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
+				{
+					printf("|%d|\n", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
+					//printf("|%d|\n", actuel->numCase);
+				}
+				else
+				{
+					//printf("|%d|", actuel->numCase);
+					printf("|%d|", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
+				}
+			}	
+			else
+			{
+				printf("|%d|\n", actuel->numCase);
+			}
+			break;
+		case 'f':
+			if (actuel->suivant != NULL)
+			{
+				if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
+				{
+					printf("|F|\n", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
+					//printf("|F|\n");
+				}
+				else
+				{
+					printf("|F|", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
+					//printf("|F|");
+				}
+			}
+			else
+			{
+				printf("|F|\n");
+			}			
+			break;
+		case 'o':
+			if (actuel->mine == 1) // Si la case ouverte est miné
+			{
+				printf("|X|");
+			}
+			else
+			{
+				int nbBombes = checkForBombes(grille, actuel->row, actuel->col);
+				if (actuel->suivant != NULL)
+				{
+					if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
+					{
+						printf("[-%d-]\n", nbBombes);
+					}
+					else
+					{
+						printf("[-%d-]", nbBombes);
+					}
+				}
+				else
+				{
+					printf("[-%d-]\n", nbBombes);
+				}				
+			}
+			break;
+		default:
+			break;
+		}
+		actuel = actuel->suivant;
+	}
 }
 
-Element *findCase(Liste *maGrille,int _numCase)
+Element *findCase(Liste *maGrille, int _numCase)
 {
-    if(maGrille == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
+	if (maGrille == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
 
-    Element *actuel = maGrille->premier;    
-    while(actuel != NULL)
-    {
-        if(actuel->numCase == _numCase)
-        {
-            return actuel;
-        }
-        actuel = actuel->suivant;
-    }
-    if(actuel = maGrille->premier)
-    {
-        actuel = NULL;
-        return actuel;
-    }
+	Element *actuel = maGrille->premier;
+	while (actuel != NULL)
+	{
+		if (actuel->numCase == _numCase)
+		{
+			return actuel;
+		}
+		actuel = actuel->suivant;
+	}
+	if (actuel = maGrille->premier)
+	{
+		actuel = NULL;
+		return actuel;
+	}
+	return actuel;
+}
+
+void remplissageGrille(int nbRows, int nbCols, Liste *maGrille)
+{
+	int r;
+	int c;
+	for (r = 0; r < nbRows; r++)
+	{
+		for (c = 0; c < nbCols; c++)
+		{
+			if (r == 0 && c == 0)
+			{
+				c++;
+				insertionFin(maGrille, r, c, 'c', isMined());
+			}
+			else
+				insertionFin(maGrille, r, c, 'c', isMined());
+		}
+	}
+}
+
+
+
+// -------------------------------------------------- TEST --------------------------------------
+void testAffichage(Liste *grille)
+{
+	if (grille == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	Element *elem = grille->premier;
+
+	while (elem != NULL)
+	{
+		printf("|row : %d // col : %d // statut : %c // mined : %d // numCase : %d |\n", elem->row, elem->col, elem->statut, elem->mine, elem->numCase);
+		elem = elem->suivant;
+	}
+	printf("-Fin-\n");
 }
 

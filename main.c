@@ -4,49 +4,37 @@
 #include "grille.h"
 #include "jeu.h"
 
+#define GRILLEMAX 16
+
 int main()
 {
-    srand(time(NULL)); // Init rand avec le le nombre de secondes écoulées depuis le premier janvier 1970 au moment du lancement
-    printf("--------------------- DEMINEUR ---------------------\n");
+	srand(time(NULL)); // Init rand avec le le nombre de secondes écoulées depuis le premier janvier 1970 au moment du lancement
+	printf("--------------------- DEMINEUR ---------------------\n");
 
-    int nbCols;
-    int nbRows;
+	int nbCols;
+	int nbRows;
 
-    printf("Veuillez choisir un nombre de lignes (max : 8) :  \n");
-    scanf("%d",&nbRows);
+	printf("Veuillez choisir un nombre de lignes (max : %d) :  \n",GRILLEMAX);
+	scanf_s("%d", &nbRows);
 
-    printf("Veuillez choisir un nombre de colonnes (max : 8) : \n");
-    scanf("%d",&nbCols);
+	printf("Veuillez choisir un nombre de colonnes (max : %d) : \n",GRILLEMAX);
+	scanf_s("%d", &nbCols);
 
-    if(nbRows > 0 && nbRows <= 8)
-    {
-        if(nbCols > 0 && nbCols <= 8)
-        {
-            Liste *maGrille = initialisation(nbRows, nbCols);
-            int r;
-            int c;
-            for(r = 0; r < nbRows; r++)
-            {      
-                for(c = 0; c < nbCols; c++)
-                {
-                    if(r == 0 && c == 0)
-                    {
-                        ++c;
-                        insertion(maGrille, r, c, 'c',isMined());
-                    }
-                    else
-                        insertion(maGrille, r, c, 'c',isMined());
-                }                
-            }
-            printf("La partie commence ! \n\n\n");
-            afficherGrille(maGrille);
-            Play(nbRows, nbCols, maGrille);
-        }
-    }
-    else
-    {
-        printf("Erreur dans le nombre de lignes et de colonnes, au revoir !");
-        exit(0);
-    }
-    return 0;
+	if (nbRows > 0 && nbRows <= GRILLEMAX)
+	{
+		if (nbCols > 0 && nbCols <= GRILLEMAX)
+		{
+			Liste *maGrille = initialisation(nbRows, nbCols); // Initialisation de la grille
+			remplissageGrille(nbRows, nbCols, maGrille); // On créer une grille de la taille donnée
+			printf("La partie commence ! \n\n\n");
+			afficherGrille(maGrille); // Affichage de la grille pour débuter la partie
+			Play(nbRows, nbCols, maGrille); // On démarre la partie en demandant au joueur de choisir où jouer, la méthode est récursive
+		}
+	}
+	else
+	{
+		printf("Erreur dans le nombre de lignes et de colonnes, au revoir !");
+		exit(0);
+	}
+	return 0;
 }
