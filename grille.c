@@ -62,27 +62,6 @@ void insertionFin(Liste *grille, int _row, int _col, char _statut, int _mine)
 	grille->nbCases++; // augmente le compteur d'élement de la liste de 1
 }
 
-void insertionDebut(Liste *grille, int _row, int _col, char _statut, int _mine) // Insertion d'un élément au début de la grille
-{
-	/* Création du nouvelle case */
-	Element *nouvelleCase = malloc(sizeof(*nouvelleCase));
-	if (grille == NULL || nouvelleCase == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-
-	nouvelleCase->row = _row;
-	nouvelleCase->col = _col;
-	nouvelleCase->statut = _statut;
-	nouvelleCase->mine = _mine;
-	nouvelleCase->numCase = grille->nbCases + 1;
-
-	/* Insertion de l'élement au début de la liste */
-	nouvelleCase->suivant = grille->premier;
-	grille->premier = nouvelleCase;
-	grille->nbCases++; // augmente le compteur d'élement de la liste de 1
-}
-
 void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 {
 	if (grille == NULL)
@@ -94,20 +73,18 @@ void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 
 	while (actuel != NULL)
 	{
-		switch (actuel->statut)
+		switch (actuel->statut) // On gère l'affichage en fonction du statut de la case 
 		{
 		case 'c':
 			if (actuel->suivant != NULL)
 			{
 				if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
 				{
-					printf("|%d|\n", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
-					//printf("|%d|\n", actuel->numCase);
+					printf("|%d|\n", actuel->numCase);
 				}
 				else
 				{
-					//printf("|%d|", actuel->numCase);
-					printf("|%d|", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
+					printf("|%d|", actuel->numCase);
 				}
 			}	
 			else
@@ -120,13 +97,11 @@ void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 			{
 				if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
 				{
-					printf("|F|\n", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
-					//printf("|F|\n");
+					printf("|F|\n");
 				}
 				else
 				{
-					printf("|F|", actuel->mine); // permet de tester le message de victoire en affichant où sont les mines [A mettre en commentaire]
-					//printf("|F|");
+					printf("|F|");
 				}
 			}
 			else
@@ -146,16 +121,16 @@ void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 				{
 					if (actuel->row < actuel->suivant->row) // Si la case d'après est sur une autre ligne on fait un retour à la ligne
 					{
-						printf("[-%d-]\n", nbBombes);
+						printf("|*%d*|\n", nbBombes);
 					}
 					else
 					{
-						printf("[-%d-]", nbBombes);
+						printf("|*%d*|", nbBombes);
 					}
 				}
 				else
 				{
-					printf("[-%d-]\n", nbBombes);
+					printf("|*%d*|\n", nbBombes);
 				}				
 			}
 			break;
@@ -166,7 +141,7 @@ void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 	}
 }
 
-Element *findCase(Liste *maGrille, int _numCase)
+Element *findCase(Liste *maGrille, int _numCase) // Permet de trouver un element avec son numéro de case
 {
 	if (maGrille == NULL)
 	{
@@ -208,24 +183,3 @@ void remplissageGrille(int nbRows, int nbCols, Liste *maGrille)
 		}
 	}
 }
-
-
-
-// -------------------------------------------------- TEST --------------------------------------
-void testAffichage(Liste *grille)
-{
-	if (grille == NULL)
-	{
-		exit(EXIT_FAILURE);
-	}
-
-	Element *elem = grille->premier;
-
-	while (elem != NULL)
-	{
-		printf("|row : %d // col : %d // statut : %c // mined : %d // numCase : %d |\n", elem->row, elem->col, elem->statut, elem->mine, elem->numCase);
-		elem = elem->suivant;
-	}
-	printf("-Fin-\n");
-}
-

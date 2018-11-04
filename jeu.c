@@ -5,14 +5,14 @@
 
 void Play(int row, int col, Liste *grille)
 {
-	if (isWon(grille) == 'n')
+	if (isVictory(grille) == 'n') // Tant que la méthode isVictory retourne que l'on a pas encore gagné on continue de jouer 
 	{
-		printf("Veuillez selectionner une case ou jouer \n");
+		printf("\n\n\nVeuillez selectionner une case ou jouer \n");
 
 		int caseJoue = 0;
 		int casesMax = row * col; //Nombres max de cases jouables dans la grille
 		scanf_s("%d", &caseJoue);
-
+		printf("\n\n\n\n");
 		if (caseJoue > 0 && caseJoue <= casesMax) // Le joueur doit entrer une valeur supérieur à 0 et inférieur ou égale à la taille maximal de la grille
 		{
 			printf("Veuillez decider d'une action sur cette case : \n 1 - Ouvrir la case \n 2 - Mettre un drapeau sur la case \n");
@@ -41,9 +41,11 @@ void Play(int row, int col, Liste *grille)
 						}
 						else
 						{
+							printf("\n\n\n\n\n\n\n");
 							printf("\n---------------------------------\n");
-							printf(" BOOM !\nVous avez perdu !\n"); // Message de défaite, on ne relance pas le jeu
+							printf(" \nBOOM !\nVous avez perdu !\n"); // Message de défaite, on ne relance pas le jeu
 							printf("\n---------------------------------\n");
+							printf("\n\n\n");
 							afficherGrille(grille); // On réaffiche la grille avec la mine qui a explosé
 						}
 					}
@@ -89,13 +91,11 @@ void Play(int row, int col, Liste *grille)
 	}
 	else
 	{
-		printf("\n \n Vous avez gagne ! Felicitation \n");
+		printf("\n \n ******__VICTOIRE__****** ! Felicitation \n");
 		printf("-------------------FIN DE LA PARTIE------------------ \n");
 
 	}
 }
-
-
 
 int checkForBombes(Liste *grille, int rowCible, int colCible)
 {
@@ -180,21 +180,25 @@ int checkForBombes(Liste *grille, int rowCible, int colCible)
 }
 
 
-char isWon(Liste *grille)
+char isVictory(Liste *grille)
 {
-	char gameStatut = 'n';
+	char gameStatut = 'v';
 	Element *current = grille->premier;
 
 	while (current != NULL)
 	{
-		if (current->statut == 'f')
-			if (current->mine == 1)
-				gameStatut = 'w';
-
-		if (current->statut == 'c')
+		switch (current->statut)
+		{
+		case 'c':
 			gameStatut = 'n';
-			if (current->mine == 1)
-
+			break;
+		case 'f':
+			if (current->mine == 0)
+				gameStatut = 'n';
+			break;
+		default:
+			break;
+		}
 		current = current->suivant;
 	}
 	return gameStatut; // La partie est gagnée
