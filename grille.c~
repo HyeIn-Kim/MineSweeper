@@ -157,7 +157,7 @@ Element *findCase(Liste *maGrille, int _numCase) // Permet de trouver un element
 		}
 		actuel = actuel->suivant;
 	}
-	if (actuel == maGrille->premier)
+	if (actuel = maGrille->premier)
 	{
 		actuel = NULL;
 		return actuel;
