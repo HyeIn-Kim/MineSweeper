@@ -20,9 +20,9 @@ int main()
 	printf("Veuillez choisir un nombre de colonnes (max : %d) : \n",GRILLEMAX);
 	scanf("%d", &nbCols);
 
-	if (nbRows > 0 && nbRows <= GRILLEMAX)
+	if (nbRows > 2 && nbRows <= GRILLEMAX)
 	{
-		if (nbCols > 0 && nbCols <= GRILLEMAX)
+		if (nbCols > 2 && nbCols <= GRILLEMAX)
 		{
 			Liste *maGrille = initialisation(nbRows, nbCols); // Initialisation de la grille
 			remplissageGrille(nbRows, nbCols, maGrille); // On créer une grille de la taille donnée
@@ -34,6 +34,7 @@ int main()
 	else
 	{
 		printf("Erreur dans le nombre de lignes et de colonnes, au revoir !");
+		main();
 		exit(0);
 	}
 	return 0;
