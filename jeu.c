@@ -30,6 +30,8 @@ void Play(int row, int col, Liste *grille)
 					if (caseATrouver->statut == 'o')
 					{
 						printf("Case deja ouverte !\n");
+						Play(row, col, grille); // relance la methode de jeu
+
 					}
 					else
 					{

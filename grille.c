@@ -135,6 +135,7 @@ void afficherGrille(Liste *grille) // Gère l'affichage de la grille
 			}
 			break;
 		default:
+			printf("Erreur lors de l'affichage de la grille");
 			break;
 		}
 		actuel = actuel->suivant;
