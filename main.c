@@ -1,41 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
-#include "grille.h"
-#include "jeu.h"
 
-#define GRILLEMAX 16
+#include "Minesweeper.h"
+
+int checkRows(int boardRows) {
+	return (boardRows >= minBoard && boardRows <= maxBoard);
+}
+int checkCols(int boardCols) {
+	return (boardCols >= minBoard && boardCols <= maxBoard);
+}
 
 int main()
 {
-	srand(time(NULL)); // Init rand avec le le nombre de secondes Ã©coulÃ©es depuis le premier janvier 1970 au moment du lancement
-	printf("--------------------- DEMINEUR ---------------------\n");
-
-	int nbCols;
-	int nbRows;
-
-	printf("Veuillez choisir un nombre de lignes (max : %d) :  \n",GRILLEMAX);
-	scanf("%d", &nbRows);
-
-	printf("Veuillez choisir un nombre de colonnes (max : %d) : \n",GRILLEMAX);
-	scanf("%d", &nbCols);
-
-	if (nbRows > 2 && nbRows <= GRILLEMAX)
-	{
-		if (nbCols > 2 && nbCols <= GRILLEMAX)
-		{
-			Liste *maGrille = initialisation(nbRows, nbCols); // Initialisation de la grille
-			remplissageGrille(nbRows, nbCols, maGrille); // On crÃ©er une grille de la taille donnÃ©e
-			printf("La partie commence ! \n\n\n");
-			afficherGrille(maGrille); // Affichage de la grille pour dÃ©buter la partie
-			Play(nbRows, nbCols, maGrille); // On dÃ©marre la partie en demandant au joueur de choisir oÃ¹ jouer, la mÃ©thode est rÃ©cursive
-		}
+	Board my_Board[16][16];
+	int boardRows, boardCols; 
+	boardRows = 0;
+	boardCols = 0;
+	while (!checkRows(boardRows) || !checkCols(boardCols)){
+		printf("%d~%d »çÀÌ ¼ýÀÚ ÀÔ·Â: ",minBoard,maxBoard); 
+		scanf_s("%d %d", &boardRows, &boardCols);
 	}
-	else
-	{
-		printf("Erreur dans le nombre de lignes et de colonnes, au revoir !");
-		main();
-		exit(0);
-	}
-	return 0;
+	
+	InitBoard(*my_Board);
+	Play(*my_Board);
+
+    return 0;
 }
+
+
