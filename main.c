@@ -10,7 +10,7 @@ int main()
 	boardRows = 0;
 	boardCols = 0;
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
-		printf("%d~%d 사이 숫자 입력: ",MINBOARD,MAXBOARD); 
+		printf("%d~%d Please enter rows, cols:",MINBOARD,MAXBOARD); 
 		scanf_s("%d %d", &boardRows, &boardCols);
 	}
 	
