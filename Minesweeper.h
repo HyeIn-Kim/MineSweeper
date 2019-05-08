@@ -3,14 +3,12 @@
 
 #define NORMAL 0
 #define MINE 1
+#define MINBOARD 3
+#define MAXBOARD 16
 #define STATUS_OPEN 100
 #define STATUS_FLAG 101
 #define STATUS_CLOSE 102
 #define STATUS_OUTOFRANGE 103
-
-const double mineRate = 0.15;
-const int minBoard = 3;
-const int maxBoard = 16;
 
 typedef struct Board {
 	int structBlock;

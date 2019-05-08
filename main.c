@@ -1,14 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "minesweeper.h"
 
-#include "Minesweeper.h"
-
-int checkRows(int boardRows) {
-	return (boardRows >= minBoard && boardRows <= maxBoard);
-}
-int checkCols(int boardCols) {
-	return (boardCols >= minBoard && boardCols <= maxBoard);
-}
 
 int main()
 {
@@ -17,7 +10,7 @@ int main()
 	boardRows = 0;
 	boardCols = 0;
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
-		printf("%d~%d 사이 숫자 입력: ",minBoard,maxBoard); 
+		printf("%d~%d 사이 숫자 입력: ",MINBOARD,MAXBOARD); 
 		scanf_s("%d %d", &boardRows, &boardCols);
 	}
 	
