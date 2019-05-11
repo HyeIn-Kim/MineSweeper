@@ -11,7 +11,7 @@
 #define STATUS_OUTOFRANGE 103
 
 typedef struct Board {
-	int structBlock;
+	int statusBlock; 
 	int statusMine;
 	int cntNearMine;
 }Board;
@@ -19,7 +19,7 @@ typedef struct Board {
 void Play(Board*);
 void MineAllocate(Board*);
 void OpenBlock(int,int,Board*);
-void InitBoard(Board*);
+void InitBoard(Board*,int,int);
 int IsGameOver();
 int IsGameReset();
 int IsVictory();

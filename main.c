@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "minesweeper.h"
 
-
 int main()
 {
-	Board my_Board[16][16];
+	int i,j;
+	Board my_Board[MAXBOARD][MAXBOARD];
 	int boardRows, boardCols; 
 	boardRows = 0;
 	boardCols = 0;
@@ -14,10 +14,23 @@ int main()
 		scanf_s("%d %d", &boardRows, &boardCols);
 	}
 	
-	InitBoard(*my_Board);
+	InitBoard(my_Board, boardRows, boardCols);
 	Play(*my_Board);
 
     return 0;
 }
 
-
+void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
+	int i,j;
+	for(i=0;i<MAXBOARD;i++){ 
+		for(j=0;j<MAXBOARD;j++){
+			if(i>=boardRows || j>=boardCols){
+				my_Board[i][j].statusBlock=STATUS_OUTOFRANGE;
+			}
+			else{
+				my_Board[i][j].statusBlock=STATUS_CLOSE;
+			}
+			my_Board[i][j].statusMine=NORMAL;
+		}
+	}
+}
