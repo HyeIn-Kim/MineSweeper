@@ -20,11 +20,12 @@ void Play(Board*);
 void MineAllocate(Board*);
 void OpenBlock(int,int,Board*);
 void InitBoard(Board*,int,int);
-int IsGameOver();
-int IsGameReset();
-int IsVictory();
 void DrawBoard();
 void CntMine(Board*); 
+int IsGameReset();
+int IsRetry(char);
+int IsNotRetry(char);
+int IsVictory();
 int checkRows(int);
 int checkCols(int);
 
