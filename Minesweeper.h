@@ -16,8 +16,8 @@ typedef struct Board {
 	int cntNearMine;
 }Board;
 
-void Play(Board*);
-void MineAllocate(Board*);
+void Play(Board*,int,int);
+void MineAllocate(Board*,int,int);
 void OpenBlock(int,int,Board*);
 void InitBoard(Board*,int,int);
 int IsGameOver();

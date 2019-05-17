@@ -1,4 +1,4 @@
-#include"Minesweeper.h"
+#include "Minesweeper.h"
 
 
 int checkRows(int boardRows) {

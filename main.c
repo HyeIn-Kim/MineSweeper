@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "minesweeper.h"
 
 int main()
@@ -14,8 +15,8 @@ int main()
 		scanf_s("%d %d", &boardRows, &boardCols);
 	}
 	
-	InitBoard(my_Board, boardRows, boardCols);
-	Play(*my_Board);
+	InitBoard(*my_Board, boardRows, boardCols);
+	Play(*my_Board, boardRows, boardCols);
 
     return 0;
 }
