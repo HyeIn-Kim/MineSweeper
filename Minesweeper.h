@@ -26,7 +26,7 @@ int CntMine(Board*);
 int IsGameReset();
 int IsRetry(char);
 int IsNotRetry(char);
-int IsVictory();
+int IsVictory(Board **my_Board, int boardRows, int boardCols); //½Â¸®¿©ºÎ ÇÔ¼ö. ¹ÝÈ¯°ª: ½Â¸®(1), ½Â¸®¾Æ´Ô(0)
 int checkRows(int);
 int checkCols(int);
 
