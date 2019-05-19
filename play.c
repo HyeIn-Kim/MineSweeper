@@ -132,6 +132,28 @@ void CntMine(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int bo
 	}
 }
 
+int OpenBlock(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int boardCols) {
+	if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
+		if (my_Board[row][col].statusMine == MINE) {
+			return 1;
+		}
+		else {
+			my_Board[row][col].statusBlock = STATUS_OPEN;
+			CntMine(my_Board, row, col, boardRows, boardCols);
+			return 0;
+		}
+	}
+	return 0;
+}
+
+void FlagBlock(int row, int col, Board my_Board[][MAXBOARD]) {
+	if (my_Board[row][col].statusBlock == STATUS_FLAG) {
+		my_Board[row][col].statusBlock = STATUS_CLOSE;
+	}
+	else {
+		my_Board[row][col].statusBlock = STATUS_FLAG;
+	}
+}
 
 void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	static int init = 0;
@@ -140,8 +162,8 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 	while (IsVictory(my_Board, boardRows, boardCols)) {
 		do {
-			printf("\n%d~%d Please enter rows, cols:", MINBOARD, MAXBOARD);
-			scanf_s("%d %d", &row, &col);
+			printf("\nPlease Enter Rows 0~%d / Cols 0~%d: ", boardRows - 1, boardCols - 1);
+			scanf_s(" %d %d", &row, &col);
 		} while (!checkRowsinGame(row, boardRows) || !checkColsinGame(col, boardCols));
 
 		if (init == 0) {
@@ -152,12 +174,18 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 		do {
 			printf("\nSelect your action (1: Open Block / 2: Flag):");
-			scanf_s("%d", &action);
+			scanf_s(" %d", &action);
 		} while (!ActionInRange(action));
 
 		switch (action) {
-			case 1: printf("\nOpen Block\n"); break;
-			case 2: printf("\nFlag\n"); break;
+			case 1: 
+				if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {
+					return;
+				}
+				break;
+			case 2:
+				FlagBlock(row, col, my_Board);
+				break;
 		}
 
 		DrawBoard(*my_Board, boardRows, boardCols);

@@ -11,7 +11,7 @@ int main()
 	boardCols = 0;
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
 		printf("%d~%d Please enter rows, cols:",MINBOARD,MAXBOARD); 
-		scanf_s("%d %d", &boardRows, &boardCols);
+		scanf_s(" %d %d", &boardRows, &boardCols);
 	}
 	
 	InitBoard(*my_Board, boardRows, boardCols);

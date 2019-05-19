@@ -19,7 +19,7 @@ typedef struct Board {
 
 void Play(Board*,int,int);
 void MineAllocate(Board*,int,int, int, int);
-void OpenBlock(int,int,Board*);
+int OpenBlock(Board*,int,int,int,int);
 void InitBoard(Board*,int,int);
 void DrawBoard(Board*,int,int);
 void CntMine(Board*,int,int,int,int);

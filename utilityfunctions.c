@@ -10,10 +10,10 @@ int checkCols(int boardCols) {
 }
 
 int checkRowsinGame(int currentRow, int boardRows) {
-	return (currentRow > 0 && currentRow <= boardRows);
+	return (currentRow >= 0 && currentRow < boardRows);
 }
 int checkColsinGame(int currentCol, int boardCols) {
-	return (currentCol > 0 && currentCol <= boardCols);
+	return (currentCol >= 0 && currentCol < boardCols);
 }
 
 int IsRetry(char user){
