@@ -3,20 +3,26 @@
 #include <time.h>
 #include "Minesweeper.h"
 
-void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
+void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int inrow, int incol) {
 	const double mineRate = 0.15;
 	int mineNum = (boardRows * boardCols) * mineRate;
 	int row;
 	int col;
+
 	srand(time(NULL));
+
 	while (mineNum > 0) {
 		row = rand() % boardRows;
 		col = rand() % boardCols;
 		if (my_Board[row][col].statusMine == NORMAL) {
+			if (row == inrow && col == incol)
+				continue;
+
 			my_Board[row][col].statusMine = MINE;
 			mineNum--;
 		}
 	}
+
 }
 
 
@@ -128,9 +134,34 @@ void CntMine(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int bo
 
 
 void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
-	DrawBoard(*my_Board,boardRows, boardCols);
-	MineAllocate(*my_Board, boardRows, boardCols);
-	IsGameReset();
-	return;
-}
+	static int init = 0;
+	int row, col;
+	int action;
 
+	while (IsVictory(my_Board, boardRows, boardCols)) {
+		do {
+			printf("\n%d~%d Please enter rows, cols:", MINBOARD, MAXBOARD);
+			scanf_s("%d %d", &row, &col);
+		} while (!checkRowsinGame(row, boardRows) || !checkColsinGame(col, boardCols));
+
+		if (init == 0) {
+			MineAllocate(*my_Board, boardRows, boardCols, row, col);
+			DrawBoard(*my_Board, boardRows, boardCols);
+			init = 1;
+		}
+
+		do {
+			printf("\nSelect your action (1: Open Block / 2: Flag):");
+			scanf_s("%d", &action);
+		} while (!ActionInRange(action));
+
+		switch (action) {
+			case 1: printf("\nOpen Block\n"); break;
+			case 2: printf("\nFlag\n"); break;
+		}
+
+		DrawBoard(*my_Board, boardRows, boardCols);
+	}
+
+	IsGameReset();
+}

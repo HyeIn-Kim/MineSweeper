@@ -18,7 +18,7 @@ typedef struct Board {
 }Board;
 
 void Play(Board*,int,int);
-void MineAllocate(Board*,int,int);
+void MineAllocate(Board*,int,int, int, int);
 void OpenBlock(int,int,Board*);
 void InitBoard(Board*,int,int);
 void DrawBoard(Board*,int,int);
@@ -29,6 +29,9 @@ int IsNotRetry(char);
 int IsVictory(Board*, int, int); 
 int checkRows(int);
 int checkCols(int);
+int checkRowsinGame(int, int);
+int checkColsinGame(int, int);
+int ActionInRange(int);
 
 
 #endif
