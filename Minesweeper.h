@@ -21,12 +21,12 @@ void Play(Board*,int,int);
 void MineAllocate(Board*,int,int);
 void OpenBlock(int,int,Board*);
 void InitBoard(Board*,int,int);
-void DrawBoard(Board*);
-void CntMine(Board **my_Board, int row, int col, int boardRows, int boardCols); //¼±ÅÃÇÑ Ä­ ÁÖÀ§ ÆøÅº ¼ö¸¦ ¼¼´Â ÇÔ¼ö.
+void DrawBoard(Board*,int,int);
+void CntMine(Board*,int,int,int,int);
 int IsGameReset();
 int IsRetry(char);
 int IsNotRetry(char);
-int IsVictory(Board **my_Board, int boardRows, int boardCols); //½Â¸®¿©ºÎ ÇÔ¼ö. ¹ÝÈ¯°ª: ½Â¸®(1), ½Â¸®¾Æ´Ô(0)
+int IsVictory(Board*, int, int); 
 int checkRows(int);
 int checkCols(int);
 

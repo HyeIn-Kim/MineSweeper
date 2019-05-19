@@ -32,6 +32,7 @@ void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 				index++;
 				my_Board[i][j].statusBlock=STATUS_CLOSE;
 				my_Board[i][j].indexBlock=index;
+				my_Board[i][j].cntNearMine=0;
 			}
 			my_Board[i][j].statusMine=NORMAL;
 		}
