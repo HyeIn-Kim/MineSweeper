@@ -22,7 +22,7 @@ void MineAllocate(Board*,int,int);
 void OpenBlock(int,int,Board*);
 void InitBoard(Board*,int,int);
 void DrawBoard(Board*);
-int CntMine(Board*); 
+void CntMine(Board **my_Board, int row, int col, int boardRows, int boardCols); //선택한 칸 주위 폭탄 수를 세는 함수.
 int IsGameReset();
 int IsRetry(char);
 int IsNotRetry(char);

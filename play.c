@@ -89,5 +89,53 @@ int IsVictory(Board **my_Board, int boardRows, int boardCols) {
 	return checkvictory;
 }
 
+void CntMine(Board **my_Board, int row, int col, int boardRows, int boardCols) {
+	int cnt = 0; //지뢰 수 세기
+	int checkrow, checkcol;
+
+	//주위의 9개의 칸들을 1행씩 체크한다
+	for (checkrow = row - 1; checkrow <= row + 1; checkrow++) {
+		//체크하는 행이 게임판 범위 내에 있는가?
+		if (checkrow >= 0 && checkrow < boardRows) {
+
+			//체크하는 행의 각 열을 체크한다.
+			for (checkcol = col - 1; checkcol <= col + 1; checkcol++) {
+				//체크하는 열이 게임판 범위 내에 있는가?
+				if (checkcol >= 0 && checkcol < boardCols) {
+			
+					//체크하는 칸에 지뢰가 있으면 cnt 1 증가
+					if (my_Board[checkrow][checkcol].statusMine == MINE) {
+						cnt++;
+					}
+				}
+			}
+		}
+	}
+
+	my_Board[row][col].cntNearMine = cnt;
+
+	if (cnt == 0) {
+		for (checkrow = row - 1; checkrow <= row + 1; checkrow++) {
+			//체크하는 행이 게임판 범위 내에 있는가?
+			if (checkrow >= 0 && checkrow < boardRows) {
+
+				//체크하는 행의 각 열을 체크한다.
+				for (checkcol = col - 1; checkcol <= col + 1; checkcol++) {
+					//체크하는 열이 게임판 범위 내에 있는가?
+					if (checkcol >= 0 && checkcol < boardCols) {
+
+						//체크하는 칸이 닫힌 상태일 경우, 열린 상태로 바꾸고(cnt가 0이므로 지뢰는 없다) CntMine함수 실행
+						if (my_Board[checkrow][checkcol].statusBlock == STATUS_CLOSE) {
+							my_Board[checkrow][checkcol].statusBlock == STATUS_OPEN;
+							CntMine(my_Board, checkrow, checkcol, boardRows, boardCols);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
 
 
