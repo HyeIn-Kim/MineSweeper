@@ -122,7 +122,7 @@ void CntMine(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int bo
 
 						//üũ\C7ϴ\C2 ĭ\C0\CC \B4\DD\C8\F9 \BB\F3\C5\C2\C0\CF \B0\E6\BF\EC, \BF\AD\B8\B0 \BB\F3\C5·\CE \B9ٲٰ\ED(cnt\B0\A1 0\C0̹Ƿ\CE \C1\F6\B7ڴ\C2 \BE\F8\B4\D9) CntMine\C7Լ\F6 \BD\C7\C7\E0
 						if (my_Board[checkrow][checkcol].statusBlock == STATUS_CLOSE) {
-							my_Board[checkrow][checkcol].statusBlock == STATUS_OPEN;
+							my_Board[checkrow][checkcol].statusBlock = STATUS_OPEN;
 							CntMine(my_Board, checkrow, checkcol, boardRows, boardCols);
 						}
 					}
