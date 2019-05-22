@@ -26,26 +26,26 @@ void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int 
 }
 
 
-void DrawBoard(Board my_Board[][MAXBOARD],int boardRows, int boardCols){
-	int i,j;
-	for(i=0;i<MAXBOARD;i++){ 
-		if(my_Board[i][0].statusBlock==STATUS_OUTOFRANGE)
-			return ;
+void DrawBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
+	int i, j;
+	for (i = 0;i<MAXBOARD;i++) {
+		if (my_Board[i][0].statusBlock == STATUS_OUTOFRANGE)
+			return;
 
-		for(j=0;j<MAXBOARD;j++){
-			switch(my_Board[i][j].statusBlock){
+		for (j = 0;j<MAXBOARD;j++) {
+			switch (my_Board[i][j].statusBlock) {
 			case STATUS_OPEN:
-				printf(" %d ",my_Board[i][j].cntNearMine);
+				printf(" %d ", my_Board[i][j].cntNearMine);
 				break;
 			case STATUS_CLOSE:
-				printf(" %d ",my_Board[i][j].indexBlock);
+				printf(" %d ", my_Board[i][j].indexBlock);
 				break;
 			case STATUS_FLAG:
 				printf(" F ");
-				break;	
+				break;
 			case STATUS_OUTOFRANGE:
 				printf("\n");
-				j=MAXBOARD;
+				j = MAXBOARD;
 				break;
 			default:
 				break;
@@ -97,7 +97,7 @@ void CntMine(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int bo
 			for (checkcol = col - 1; checkcol <= col + 1; checkcol++) {
 				//üũ\C7ϴ\C2 \BF\AD\C0\CC \B0\D4\C0\D3\C6\C7 \B9\FC\C0\A7 \B3\BB\BF\A1 \C0ִ°\A1?
 				if (checkcol >= 0 && checkcol < boardCols) {
-			
+
 					//üũ\C7ϴ\C2 ĭ\BF\A1 \C1\F6\B7ڰ\A1 \C0\D6\C0\B8\B8\E9 cnt 1 \C1\F5\B0\A1
 					if (my_Board[checkrow][checkcol].statusMine == MINE) {
 						cnt++;
@@ -159,7 +159,10 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int row, col;
 	int action;
 
-	while (IsVictory(my_Board, boardRows, boardCols)) {
+	do {
+		printf("\n");
+		DrawBoard(*my_Board, boardRows, boardCols);
+
 		do {
 			printf("\nPlease Enter Rows 0~%d / Cols 0~%d: ", boardRows - 1, boardCols - 1);
 			scanf_s(" %d %d", &row, &col);
@@ -167,7 +170,6 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 		if (init == 0) {
 			MineAllocate(*my_Board, boardRows, boardCols, row, col);
-			DrawBoard(*my_Board, boardRows, boardCols);
 			init = 1;
 		}
 
@@ -177,18 +179,17 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 		} while (!ActionInRange(action));
 
 		switch (action) {
-			case 1: 
-				if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {
-					return;
-				}
-				break;
-			case 2:
-				FlagBlock(row, col, my_Board);
-				break;
+		case 1:
+			if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {
+				return;
+			}
+			break;
+		case 2:
+			FlagBlock(row, col, my_Board);
+			break;
 		}
 
-		DrawBoard(*my_Board, boardRows, boardCols);
-	}
+	} while (!IsVictory(my_Board, boardRows, boardCols));
 
 	IsGameReset();
 }
