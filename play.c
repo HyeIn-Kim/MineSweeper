@@ -57,31 +57,30 @@ void DrawBoard(Board my_Board[][MAXBOARD],int boardRows, int boardCols){
 
 
 
-//HACK: 2\C1\DFfor\B9\AE\B0\FA 2\C1\DFif\B9\AE\C0\B8\B7\CE \B0\A1\B5\B6\BC\BA\C0\CC \B6\B3\BE\EE\C1\F8\B4\D9. if\B9\AE\B8\B8 \C7Լ\F6\B7\CE \B3\AA\B4\AD \BC\F6 \C0\D6\C0\BB \B0\CD \B0\B0\B4\D9.
+//HACK: maybe can divide into subfunction
 int IsVictory(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int i, j;
-	int checkvictory = 1; //ó\C0\BD\BF\A1\B4\C2 \BD¸\AE\BF\A9\BAθ\A6 \BD¸\AE(1)\B7\CE \B5д\D9.
+	int checkvictory = 1; //initial->victory
 
 	for (i = 0; i < boardRows; i++) {
 		for (j = 0; j < boardCols; j++) {
 
-			//ĭ\C0\C7 \BB\F3\C5°\A1 \B4\DD\C8\F7\B0ų\AA \C7÷\B9\B1\D7\C0\CF \B0\E6\BF\EC, \C1\F6\B7ڰ\A1 \BE\F8\C0\B8\B8\E9 \BD¸\AE\BEƴ\D4 \B9\DDȯ
-			if (my_Board[i][j].statusMine==STATUS_CLOSE || my_Board[i][j].statusMine==STATUS_FLAG){
-				if (my_Board[i][j].statusMine == NORMAL) {
-					checkvictory = 1;
+			//closed or flaged->not mine->not victory
+			if (my_Board[i][j].statusBlock == STATUS_CLOSE || my_Board[i][j].statusBlock == STATUS_FLAG) {
+				if (my_Board[i][j].statusMine != MINE) {
+					checkvictory = 0;
 					return checkvictory;
 				}
 			}
 
-			//\C1\F6\C1\A4\B5\C8 ĭ\C0\BB \B3Ѿ \B0˻\E7\C7ϸ\E9 \BF\C0\B7\F9\C3\E2\B7\C2
+			//errorcheck
 			if (my_Board[i][j].statusMine == STATUS_OUTOFRANGE) {
 				printf("IsVictory func ourofrange error\n");
 				getchar();
 			}
-			
+
 		}
 	}
-
 	return checkvictory;
 }
 
