@@ -150,7 +150,9 @@ void FlagBlock(int row, int col, Board my_Board[][MAXBOARD]) {
 		my_Board[row][col].statusBlock = STATUS_CLOSE;
 	}
 	else {
-		my_Board[row][col].statusBlock = STATUS_FLAG;
+		if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
+			my_Board[row][col].statusBlock = STATUS_FLAG;
+		}
 	}
 }
 

@@ -1,7 +1,6 @@
 
 #include"Minesweeper.h"
 #include <stdio.h>
-#include <Windows.h>
 
 int checkRows(int boardRows) {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);

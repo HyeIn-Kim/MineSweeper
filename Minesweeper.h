@@ -1,6 +1,8 @@
 #ifndef _MINESWEEPER_H
 #define _MINESWEEPER_H
 
+#include <Windows.h>
+
 #define OFFSET_X 10
 #define OFFSET_Y 10
 
@@ -23,7 +25,7 @@ typedef struct Board {
 void Play(Board*,int,int);
 void MineAllocate(Board*,int,int, int, int);
 int OpenBlock(Board*,int,int,int,int);
-void FlagBlock(int, int, Board*);
+void FlagBlock(Board*, int, int);
 void InitBoard(Board*,int,int);
 void DrawBoard(Board*,int,int);
 void CntMine(Board*,int,int,int,int);
