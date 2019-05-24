@@ -153,7 +153,7 @@ void FlagBlock(int row, int col, Board my_Board[][MAXBOARD]) {
 }
 
 void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
-	static int init = 0;
+	int init = 0;
 	int row, col;
 	int action;
 
