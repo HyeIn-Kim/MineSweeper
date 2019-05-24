@@ -17,11 +17,17 @@ int main()
 	}
 }
 void setBoardSize(){
+	COORD pos;
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
+		setCurrentCursorPos(0,0);
 		printf("%d~%d Please enter rows, cols:",MINBOARD,MAXBOARD); 
+		pos=getCurrentCursorPos();
+		printf("        ");
+		setCurrentCursorPos(pos.X,pos.Y);
 		scanf_s(" %d %d", &boardRows, &boardCols);
 	}
 }
+
 void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 	int i,j;
 	int index=0;
@@ -33,7 +39,6 @@ void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 			else{
 				index++;
 				my_Board[i][j].statusBlock=STATUS_CLOSE;
-				my_Board[i][j].indexBlock=index;
 				my_Board[i][j].cntNearMine=0;
 			}
 			my_Board[i][j].statusMine=NORMAL;

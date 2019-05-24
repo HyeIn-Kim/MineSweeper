@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "Minesweeper.h"
@@ -28,26 +28,35 @@ void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int 
 
 void DrawBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int i, j;
+	COORD pos;
+	setCurrentCursorPos(OFFSET_X,OFFSET_Y); 
 	for (i = 0;i<boardRows;i++) {
 		if (my_Board[i][0].statusBlock == STATUS_OUTOFRANGE)
-			return;
+			return ;
 
 		for (j = 0;j<boardCols;j++) {
+			pos=getCurrentCursorPos();
 			switch (my_Board[i][j].statusBlock) {
 			case STATUS_OPEN:
-				printf(" %d ", my_Board[i][j].cntNearMine);
+				if(my_Board[i][j].statusMine==MINE){
+					printf("★");
+				}
+				else{printf("%d ", my_Board[i][j].cntNearMine);}
 				break;
 			case STATUS_CLOSE:
-				printf(" %d ", my_Board[i][j].indexBlock);
+				printf("○");
 				break;
 			case STATUS_FLAG:
-				printf(" F ");
+				printf("▶");
 				break;
 			default:
 				break;
 			}
+			setCurrentCursorPos(pos.X+4,pos.Y);
 		}
 		printf("\n");
+		pos=getCurrentCursorPos();
+		setCurrentCursorPos(pos.X+OFFSET_X,pos.Y+1);
 	}
 }
 
@@ -130,6 +139,7 @@ void CntMine(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int bo
 int OpenBlock(Board my_Board[][MAXBOARD], int row, int col, int boardRows, int boardCols) {
 	if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
 		if (my_Board[row][col].statusMine == MINE) {
+			my_Board[row][col].statusBlock=STATUS_OPEN;
 			return 1;
 		}
 		else {
@@ -156,13 +166,16 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int init = 0;
 	int row, col;
 	int action;
-
+	COORD pos;
 	do {
 		printf("\n");
 		DrawBoard(*my_Board, boardRows, boardCols);
 
 		do {
 			printf("\nPlease Enter Rows 0~%d / Cols 0~%d: ", boardRows - 1, boardCols - 1);
+			pos=getCurrentCursorPos();
+			printf("        ");
+			setCurrentCursorPos(pos.X,pos.Y);
 			scanf_s(" %d %d", &row, &col);
 		} while (!checkRowsinGame(row, boardRows) || !checkColsinGame(col, boardCols));
 
@@ -173,13 +186,19 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 		do {
 			printf("\nSelect your action (1: Open Block / 2: Flag):");
+			pos=getCurrentCursorPos();
+			printf("        ");
+			setCurrentCursorPos(pos.X,pos.Y);
 			scanf_s(" %d", &action);
 		} while (!ActionInRange(action));
 
 		switch (action) {
 		case 1:
 			if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {			
-				printf("\nGame Over!\n");
+				DrawBoard(*my_Board, boardRows, boardCols);
+				//FIX 
+				setCurrentCursorPos(0,20);
+				printf("Game Over!\n");
 				return;
 			}
 			break;
@@ -189,6 +208,8 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 		}
 
 	} while (!IsVictory(my_Board, boardRows, boardCols));
-	printf("\nYou Win!\n");
+	//FIX 
+	setCurrentCursorPos(0,20);
+	printf("You Win!\n");
 	
 }
