@@ -24,8 +24,13 @@ int IsNotRetry(char user){
 }
 
 int IsGameReset(){
+	static int flag=0;
 	char user;
 	user=NULL;
+	if(flag==0){
+		flag=1; 
+		return 1;
+	}
 	while(!IsRetry(user) && !IsNotRetry(user)){
 		getchar();
 		printf("Retry? (Y/N): ");

@@ -3,23 +3,25 @@
 #include <time.h>
 #include "minesweeper.h"
 
+int boardRows, boardCols; 
+
 int main()
 {
 	Board my_Board[MAXBOARD][MAXBOARD];
-	int boardRows, boardCols; 
-	boardRows = 0;
-	boardCols = 0;
+	while(IsGameReset()){
+		boardRows = 0;
+		boardCols = 0;
+		setBoardSize();
+		InitBoard(*my_Board, boardRows, boardCols);
+		Play(*my_Board, boardRows, boardCols);
+	}
+}
+void setBoardSize(){
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
 		printf("%d~%d Please enter rows, cols:",MINBOARD,MAXBOARD); 
 		scanf_s(" %d %d", &boardRows, &boardCols);
 	}
-	
-	InitBoard(*my_Board, boardRows, boardCols);
-	Play(*my_Board, boardRows, boardCols);
-
-    return 0;
 }
-
 void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 	int i,j;
 	int index=0;

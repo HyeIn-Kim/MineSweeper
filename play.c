@@ -28,11 +28,11 @@ void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int 
 
 void DrawBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int i, j;
-	for (i = 0;i<MAXBOARD;i++) {
+	for (i = 0;i<boardRows;i++) {
 		if (my_Board[i][0].statusBlock == STATUS_OUTOFRANGE)
 			return;
 
-		for (j = 0;j<MAXBOARD;j++) {
+		for (j = 0;j<boardCols;j++) {
 			switch (my_Board[i][j].statusBlock) {
 			case STATUS_OPEN:
 				printf(" %d ", my_Board[i][j].cntNearMine);
@@ -43,15 +43,11 @@ void DrawBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 			case STATUS_FLAG:
 				printf(" F ");
 				break;
-			case STATUS_OUTOFRANGE:
-				printf("\n");
-				j = MAXBOARD;
-				break;
 			default:
 				break;
 			}
-
 		}
+		printf("\n");
 	}
 }
 
@@ -182,7 +178,8 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 		switch (action) {
 		case 1:
-			if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {
+			if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {			
+				printf("\nGame Over!\n");
 				return;
 			}
 			break;
@@ -192,6 +189,6 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 		}
 
 	} while (!IsVictory(my_Board, boardRows, boardCols));
-
-	IsGameReset();
+	printf("\nYou Win!\n");
+	
 }

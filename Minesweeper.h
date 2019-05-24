@@ -8,7 +8,7 @@
 
 #define NORMAL 0
 #define MINE 1
-#define MINBOARD 3
+#define MINBOARD 5
 #define MAXBOARD 16
 #define STATUS_OPEN 100
 #define STATUS_FLAG 101
@@ -29,6 +29,7 @@ void FlagBlock(Board*, int, int);
 void InitBoard(Board*,int,int);
 void DrawBoard(Board*,int,int);
 void CntMine(Board*,int,int,int,int);
+void setBoardSize();
 int IsGameReset();
 int IsRetry(char);
 int IsNotRetry(char);
