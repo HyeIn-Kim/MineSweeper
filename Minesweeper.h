@@ -42,4 +42,5 @@ COORD getCurrentCursorPos(void);
 void removeCursor(void);
 COORD computeArr(int, int);
 COORD computeArrReverse(int, int);
+void IntroShow();
 #endif

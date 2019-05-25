@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "minesweeper.h"
+#include "Windows.h"
 
 int boardRows, boardCols; 
 
@@ -18,14 +19,16 @@ int main()
 }
 void setBoardSize(){
 	COORD pos;
+	IntroShow();
 	while (!checkRows(boardRows) || !checkCols(boardCols)){
-		setCurrentCursorPos(0,0);
+		setCurrentCursorPos(0,7);
 		printf("%d~%d Please enter rows, cols:",MINBOARD,MAXBOARD); 
 		pos=getCurrentCursorPos();
 		printf("        ");
 		setCurrentCursorPos(pos.X,pos.Y);
 		scanf_s(" %d %d", &boardRows, &boardCols);
 	}
+	system("cls");
 }
 
 void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
@@ -44,4 +47,12 @@ void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 			my_Board[i][j].statusMine=NORMAL;
 		}
 	}
+}
+
+void IntroShow() {
+	printf("¡è¢Ù      ¢Ö¡è ¢Ã¢Ã¢Ã ¢¹     ¢· ¡ß¡ß¡ß¡ß\n");
+	printf("¡è¢Ù      ¢Ö¡è   ¢Ã   ¢¹¢¹   ¢· ¡ß\n");
+	printf("¡è ¢Ù    ¢Ö ¡è   ¢Ã   ¢¹ ¢¹  ¢· ¡ß¡ß¡ß¡ß\n");
+	printf("¡è  ¢Ù  ¢Ö  ¡è   ¢Ã   ¢¹  ¢· ¢· ¡ß\n");
+	printf("¡è   ¢Ù¢Ö   ¡è ¢Ã¢Ã¢Ã ¢¹   ¢·¢· ¡ß¡ß¡ß¡ß\n\n");
 }

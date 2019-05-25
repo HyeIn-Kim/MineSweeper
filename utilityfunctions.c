@@ -1,5 +1,6 @@
 #include"Minesweeper.h"
 #include <stdio.h>
+#include <Windows.h>
 int checkRows(int boardRows) {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);
 }
@@ -31,7 +32,10 @@ int IsGameReset(){
 		getchar();
 		printf("Retry? (Y/N):");
 		scanf_s("%c",&user);
-		if(IsRetry(user)){return 1;}
+		if(IsRetry(user)){
+			system("cls");
+			return 1;
+		}
 		else if(IsNotRetry(user)){return 0;}
 	}
 }
