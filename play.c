@@ -168,11 +168,17 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 	int row, col;
 	int action;
 	COORD pos;
+	COORD firstquarypos;
+	COORD secondquarypos;
+
 	do {
 		printf("\n");
 		DrawBoard(*my_Board, boardRows, boardCols);
-
+		
+		firstquarypos = getCurrentCursorPos();
+		
 		do {
+			setCurrentCursorPos(firstquarypos.X, firstquarypos.Y);
 			printf("\nPlease Enter Rows 0~%d / Cols 0~%d: ", boardRows - 1, boardCols - 1);
 			pos=getCurrentCursorPos();
 			printf("        ");
@@ -185,7 +191,11 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 			init = 1;
 		}
 
+		secondquarypos = getCurrentCursorPos();
+
 		do {
+			setCurrentCursorPos(secondquarypos.X, secondquarypos.Y);
+
 			printf("\nSelect your action (1: Open Block / 2: Flag):");
 			pos=getCurrentCursorPos();
 			printf("        ");
