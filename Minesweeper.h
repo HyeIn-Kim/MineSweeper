@@ -43,4 +43,5 @@ void removeCursor(void);
 COORD computeArr(int, int);
 COORD computeArrReverse(int, int);
 void IntroShow();
+void OpenAllBlock(Board*, int, int, int, int);
 #endif

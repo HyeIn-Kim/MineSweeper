@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <Windows.h>
 #include "Minesweeper.h"
 
 void MineAllocate(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int inrow, int incol) {
@@ -195,9 +196,9 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 		switch (action) {
 		case 1:
 			if (OpenBlock(my_Board, row, col, boardRows, boardCols)) {			
+				system("cls");
+
 				DrawBoard(*my_Board, boardRows, boardCols);
-				//FIX 
-				setCurrentCursorPos(0,20);
 				printf("Game Over!\n");
 				return;
 			}
@@ -209,7 +210,21 @@ void Play(Board my_Board[][MAXBOARD], int boardRows, int boardCols) {
 
 	} while (!IsVictory(my_Board, boardRows, boardCols));
 	//FIX 
-	setCurrentCursorPos(0,20);
+	system("cls");
+
+	OpenAllBlock(*my_Board, boardRows, boardCols, row, col);
+	DrawBoard(*my_Board, boardRows, boardCols);
+	
 	printf("You Win!\n");
 	
+}
+
+
+void OpenAllBlock(Board my_Board[][MAXBOARD], int boardRows, int boardCols, int inrow, int incol) {
+	int i, j;
+	for (i = 0; i < boardRows; i++) {
+		for (j = 0; j < boardCols; j++) {
+			my_Board[i][j].statusBlock = STATUS_OPEN;
+		}
+	}
 }
