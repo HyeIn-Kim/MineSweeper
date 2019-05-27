@@ -33,14 +33,12 @@ void setBoardSize(){
 
 void InitBoard(Board my_Board[][MAXBOARD], int boardRows, int boardCols){
 	int i,j;
-	int index=0;
 	for(i=0;i<MAXBOARD;i++){ 
 		for(j=0;j<MAXBOARD;j++){
 			if(i>=boardRows || j>=boardCols){
 				my_Board[i][j].statusBlock=STATUS_OUTOFRANGE;
 			}
 			else{
-				index++;
 				my_Board[i][j].statusBlock=STATUS_CLOSE;
 				my_Board[i][j].cntNearMine=0;
 			}
