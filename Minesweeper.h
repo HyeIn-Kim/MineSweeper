@@ -39,9 +39,6 @@ int checkColsinGame(int, int);
 int ActionInRange(int);
 void setCurrentCursorPos(int, int);
 COORD getCurrentCursorPos(void);
-void removeCursor(void);
-COORD computeArr(int, int);
-COORD computeArrReverse(int, int);
 void IntroShow();
 void OpenAllBlock(Board*, int, int, int, int);
 #endif
