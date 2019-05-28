@@ -24,27 +24,29 @@ typedef struct Board {
 Board my_Board[MAXBOARD][MAXBOARD];
 int boardRows;
 int boardCols;
+int row;
+int col;
 
-void Play(int, int);
-void MineAllocate(int, int, int, int);
-int OpenBlock(int, int, int, int);
-void FlagBlock(int, int);
+void Play();
+void MineAllocate();
+int OpenBlock();
+void FlagBlock();
 void InitBoard(int, int);
-void DrawBoard(int, int);
-void CntMine(int, int, int, int);
+void DrawBoard();
+void CntMine(int, int);
 void setBoardSize();
 int IsGameReset();
 int IsRetry(char);
 int IsNotRetry(char);
-int IsVictory(int, int); 
-int checkRows(int);
-int checkCols(int);
-int checkRowsinGame(int, int);
-int checkColsinGame(int, int);
+int IsVictory(); 
+int checkRows();
+int checkCols();
+int checkRowsinGame(int);
+int checkColsinGame(int);
 int ActionInRange(int);
 void setCurrentCursorPos(int, int);
 COORD getCurrentCursorPos(void);
 void IntroShow();
-void OpenAllBlock(int, int, int, int);
+void OpenAllBlock();
 
 #endif

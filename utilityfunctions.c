@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include "Minesweeper.h"
 
-int checkRows(int boardRows) {
+int checkRows() {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);
 }
 
-int checkCols(int boardCols) {
+int checkCols() {
 	return (boardCols >= MINBOARD && boardCols <= MAXBOARD);
 }
 
-int checkRowsinGame(int currentRow, int boardRows) {
+int checkRowsinGame(int currentRow) {
 	return (currentRow >= 0 && currentRow < boardRows);
 }
 
-int checkColsinGame(int currentCol, int boardCols) {
+int checkColsinGame(int currentCol) {
 	return (currentCol >= 0 && currentCol < boardCols);
 }
 

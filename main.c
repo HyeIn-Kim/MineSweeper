@@ -11,7 +11,7 @@ int main() {
 
 		setBoardSize();
 		InitBoard(boardRows, boardCols);
-		Play(boardRows, boardCols);
+		Play();
 	}
 
 }
@@ -21,7 +21,7 @@ void setBoardSize() {
 
 	IntroShow();
 
-	while (!checkRows(boardRows) || !checkCols(boardCols)) {
+	while (!checkRows() || !checkCols()) {
 
 		setCurrentCursorPos(0, 7);
 		printf("%d~%d Please enter rows, cols:", MINBOARD, MAXBOARD); 
