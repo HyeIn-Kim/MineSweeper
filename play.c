@@ -3,22 +3,22 @@
 #include <time.h>
 #include "Minesweeper.h"
 
-void MineAllocate(int boardRows, int boardCols, int inrow, int incol) {
+void MineAllocate() {
 	const double mineRate = 0.15;
 	int mineNum = (boardRows * boardCols) * mineRate;
-	int row;
-	int col;
+	int allocateRow;
+	int allocateCol;
 
 	srand(time(NULL));
 
 	while (mineNum > 0) {
-		row = rand() % boardRows;
-		col = rand() % boardCols;
+		allocateRow = rand() % boardRows;
+		allocateCol = rand() % boardCols;
 
-		if (my_Board[row][col].statusMine == NORMAL) {
+		if (my_Board[allocateRow][allocateCol].statusMine == NORMAL) {
 
-			if (row != inrow || col != incol) {
-				my_Board[row][col].statusMine = MINE;
+			if (allocateRow != inrow || allocateCol != incol) {
+				my_Board[allocateRow][allocateCol].statusMine = MINE;
 				mineNum--;
 			}
 
@@ -31,7 +31,7 @@ void MineAllocate(int boardRows, int boardCols, int inrow, int incol) {
 
 
 //HACK: maybe can divide into subfunction
-int IsVictory(int boardRows, int boardCols) {
+int IsVictory() {
 	int i, j;
 	int checkvictory = 1; //initial->victory
 
@@ -58,7 +58,7 @@ int IsVictory(int boardRows, int boardCols) {
 	return checkvictory;
 }
 
-void CntMine(int row, int col, int boardRows, int boardCols) {
+void CntMine(int row, int col) {
 	int cnt = 0;
 	int checkrow, checkcol;
 
@@ -89,7 +89,7 @@ void CntMine(int row, int col, int boardRows, int boardCols) {
 
 						if (my_Board[checkrow][checkcol].statusBlock == STATUS_CLOSE) {
 							my_Board[checkrow][checkcol].statusBlock = STATUS_OPEN;
-							CntMine(checkrow, checkcol, boardRows, boardCols);
+							CntMine(checkrow, checkcol);
 						}
 
 					}
@@ -99,7 +99,7 @@ void CntMine(int row, int col, int boardRows, int boardCols) {
 	}
 }
 
-int OpenBlock(int row, int col, int boardRows, int boardCols) {
+int OpenBlock() {
 	if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
 
 		if (my_Board[row][col].statusMine == MINE) {
@@ -109,7 +109,7 @@ int OpenBlock(int row, int col, int boardRows, int boardCols) {
 
 		else {
 			my_Board[row][col].statusBlock = STATUS_OPEN;
-			CntMine(row, col, boardRows, boardCols);
+			CntMine(row, col);
 			return 0;
 		}
 
@@ -118,7 +118,7 @@ int OpenBlock(int row, int col, int boardRows, int boardCols) {
 	return 0;
 }
 
-void FlagBlock(int row, int col) {
+void FlagBlock() {
 	if (my_Board[row][col].statusBlock == STATUS_FLAG) {
 		my_Board[row][col].statusBlock = STATUS_CLOSE;
 	}
@@ -133,9 +133,8 @@ void FlagBlock(int row, int col) {
 
 }
 
-void Play(int boardRows, int boardCols) {
+void Play() {
 	int init = 0;
-	int row, col;
 	int action;
 	COORD pos;
 	COORD firstquarypos;
@@ -143,8 +142,7 @@ void Play(int boardRows, int boardCols) {
 
 	do {
 		printf("\n");
-		DrawBoard(boardRows, boardCols);
-
+		DrawBoard();
 		firstquarypos = getCurrentCursorPos();
 
 		do {
@@ -155,10 +153,10 @@ void Play(int boardRows, int boardCols) {
 			setCurrentCursorPos(pos.X, pos.Y);
 			scanf_s(" %d %d", &row, &col);
 
-		} while (!checkRowsinGame(row, boardRows) || !checkColsinGame(col, boardCols));
+		} while (!checkRowsinGame(row) || !checkColsinGame(col));
 
 		if (init == 0) {
-			MineAllocate(boardRows, boardCols, row, col);
+			MineAllocate(row, col);
 			init = 1;
 		}
 
@@ -176,35 +174,34 @@ void Play(int boardRows, int boardCols) {
 
 		switch (action) {
 		case 1:
-			if (OpenBlock(row, col, boardRows, boardCols)) {
+			if (OpenBlock()) {
 				system("cls");
-
-				DrawBoard(boardRows, boardCols);
+				DrawBoard();
 				printf("Game Over!\n");
 				return;
 			}
 			break;
 
 		case 2:
-			FlagBlock(row, col);
+			FlagBlock();
 			break;
 
 		}
 
-	} while (!IsVictory(boardRows, boardCols));
+	} while (!IsVictory());
 
 	//FIX 
 	system("cls");
 
-	OpenAllBlock(boardRows, boardCols, row, col);
-	DrawBoard(boardRows, boardCols);
+	OpenAllBlock();
+	DrawBoard();
 
 	printf("You Win!\n");
 
 }
 
 
-void OpenAllBlock(int boardRows, int boardCols, int inrow, int incol) {
+void OpenAllBlock() {
 	int i, j;
 
 	for (i = 0; i < boardRows; i++) {

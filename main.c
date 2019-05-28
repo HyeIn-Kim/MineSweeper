@@ -9,17 +9,16 @@ int main() {
 		boardCols = 0;
 		setBoardSize();
 		InitBoard();
-		Play(boardRows, boardCols);
+		Play();
 	}
 
 }
 
 void setBoardSize() {
 	COORD pos;
-
 	IntroShow();
 
-	while (!checkRows(boardRows) || !checkCols(boardCols)) {
+	while (!checkRows() || !checkCols()) {
 
 		setCurrentCursorPos(0, 7);
 		printf("%d~%d Please enter rows, cols:", MINBOARD, MAXBOARD); 
