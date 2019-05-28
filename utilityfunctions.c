@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Minesweeper.h"
+#pragma warning (disable:4996)
 
 int checkRows() {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);
@@ -29,7 +30,7 @@ int IsGameReset(){
 	static int flag = 0;
 	char user;
 
-	user = NULL;
+	user = ' ';
 
 	if(flag == 0) {
 		flag = 1; 
@@ -41,7 +42,7 @@ int IsGameReset(){
 		getchar();
 
 		printf("\nRetry? (Y/N):");
-		scanf_s("%c", &user);
+		scanf("%c", &user);
 
 		if(IsRetry(user)) {
 			system("cls");
