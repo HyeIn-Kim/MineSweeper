@@ -4,13 +4,11 @@
 #include "Minesweeper.h"
 
 int main() {
-
 	while(IsGameReset()){
 		boardRows = 0;
 		boardCols = 0;
-
 		setBoardSize();
-		InitBoard(boardRows, boardCols);
+		InitBoard();
 		Play(boardRows, boardCols);
 	}
 
@@ -38,9 +36,8 @@ void setBoardSize() {
 
 }
 
-void InitBoard(int boardRows, int boardCols){
+void InitBoard(){
 	int i, j;
-
 	for(i = 0; i < MAXBOARD; i++) {
 		for(j = 0; j < MAXBOARD; j++) {
 
@@ -59,12 +56,4 @@ void InitBoard(int boardRows, int boardCols){
 	}
 }
 
-void IntroShow() {
 
-	printf("¡è¢Ù      ¢Ö¡è ¢Ã¢Ã¢Ã ¢¹     ¢· ¡ß¡ß¡ß¡ß\n");
-	printf("¡è¢Ù      ¢Ö¡è   ¢Ã   ¢¹¢¹   ¢· ¡ß\n");
-	printf("¡è ¢Ù    ¢Ö ¡è   ¢Ã   ¢¹ ¢¹  ¢· ¡ß¡ß¡ß¡ß\n");
-	printf("¡è  ¢Ù  ¢Ö  ¡è   ¢Ã   ¢¹  ¢· ¢· ¡ß\n");
-	printf("¡è   ¢Ù¢Ö   ¡è ¢Ã¢Ã¢Ã ¢¹   ¢·¢· ¡ß¡ß¡ß¡ß\n\n");
-
-}
