@@ -36,8 +36,6 @@ void DrawBoard();
 void CntMine(int, int);
 void setBoardSize();
 int IsGameReset();
-int IsRetry(char);
-int IsNotRetry(char);
 int IsVictory(); 
 int checkRows();
 int checkCols();

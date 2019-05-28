@@ -18,42 +18,40 @@ int checkColsinGame(int currentCol) {
 	return (currentCol >= 0 && currentCol < boardCols);
 }
 
-int IsRetry(char user) {
-	return (user == 'y' || user == 'Y');
-}
-
-int IsNotRetry(char user) {
-	return (user == 'n' || user == 'N');
-}
-
 int IsGameReset(){
 	static int flag = 0;
 	char user;
-
+	COORD pos;
+	
 	user = ' ';
 
 	if(flag == 0) {
 		flag = 1; 
 		return 1;
 	}
+	pos = getCurrentCursorPos();
 
-	while(!IsRetry(user) && !IsNotRetry(user)) {
+	while(user != 'y' && user != 'Y' && user != 'n' && user != 'N') {
 
+		setCurrentCursorPos(pos.X, pos.Y);
+		
 		getchar();
 
 		printf("\nRetry? (Y/N):");
 		scanf("%c", &user);
 
-		if(IsRetry(user)) {
+		if(user == 'y' || user == 'Y') {
 			system("cls");
 			return 1;
 		}
 
-		else if(IsNotRetry(user)) {
+		if(user == 'n' || user == 'N') {
 			return 0;
 		}
-
 	}
+
+	/* error-loop ended before getting right input */
+	return -1;
 }
 
 int ActionInRange(int action) {
