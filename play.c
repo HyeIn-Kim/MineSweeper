@@ -194,13 +194,21 @@ void OpenAllBlock(void) {
 
 }
 
+/**
+* 게임판에서 칸을 선택한다.
+*
+* @param void
+* @return 없음
+*/
 void InputBoard(void) {
 	COORD pos;
 	COORD currentPos;
 
+	/* 커서의 시작위치를 저장한다 */
 	currentPos = GetCurrentCursorPos();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 
+	/* 입력을 받겠다는 문자열을 출력하고 선택할 칸의 행과 열을 입력을 받는다*/
 	printf("\nPlease Enter Rows 1~%d / Cols 1~%d:", boardRows, boardCols);
 	pos = GetCurrentCursorPos();
 	printf("        \n\n");
@@ -208,20 +216,30 @@ void InputBoard(void) {
 	SetCurrentCursorPos(pos.X, pos.Y);
 	scanf(" %d %d", &row, &col);
 
+	/* 배열이므로 입력받은 행과 열에서 1을 뺀다. */
 	row = row - 1;
 	col = col - 1;
 
+	/* 커서의 위치를 입력 받겠다는 문자열 뒤로 위치시킨다*/
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 }
 
+/**
+* 게임에서의 행동을 입력받는다.
+*
+* @param void
+* @return 칸 열기일 경우 1반환, 깃발꽂기일 경우 2 반환
+*/
 int InputAction(void) {
 	int action;
 	COORD pos;
 	COORD currentPos;
 
+	/* 입력을 받겠다는 문자열을 출력하고 선택할 칸의 행과 열을 입력을 받는다*/
 	currentPos = GetCurrentCursorPos();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 
+	/* 입력을 받겠다는 문자열을 출력하고 선택할 행동을 입력을 받는다*/
 	printf("\n\n\nSelect your action (1: Open Block / 2: Flag):");
 	pos = GetCurrentCursorPos();
 	printf("        ");
@@ -229,36 +247,51 @@ int InputAction(void) {
 
 	scanf(" %d", &action);
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
-
+	/* 행동을 반환한다. */
 	return action;
 }
 
+/**
+* 게임을 실행시킨다.
+*
+* @param void
+* @return 없음
+*/
 void Play(void) {
 	int init = 0;
 	int action;
 
+	/* 승리 전까지 반복문을 통해 게임을 진행시킨다. */
 	do {
 
+		/* 게임판을 그린다. */
 		printf("\n");
 		DrawBoard();
 
 		do {
 
+			/* 칸을 선택한다 */
 			InputBoard();
 
 		} while (!CheckRowsinGame(row) || !CheckColsinGame(col));
 
+		/* 처음으로 칸을 선택한 경우 지뢰를 배치시킨다. */
 		if (init == 0) {
 			MineAllocate();
 			init = 1;
 		}
 
+		/* 행동을 받는다. */
 		do {
 
 			action = InputAction();
 
 		} while (!ActionInRange(action));
 
+		/* 각각의 행동에 맞게 동작
+		*1. 칸 열기
+		*2. 깃발꽂기
+		*/
 		switch (action) {
 		case 1:
 			if (OpenBlock()) {
@@ -277,7 +310,7 @@ void Play(void) {
 
 	} while (!IsVictory());
 
-	//FIX 
+	/* 승리 */
 	system("cls");
 
 	OpenAllBlock();
