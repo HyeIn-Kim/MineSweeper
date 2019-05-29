@@ -41,20 +41,20 @@ Apache License Version 2.0
 
 (1) 인트로 화면에서 5~16 사이의 게임판의 행렬 크기를 입력한다.
 
-<img src="https://user-images.githubusercontent.com/48747805/58545626-9a4f9200-823e-11e9-8f66-5b6633bc20f4.png" width="50%"></img>
+<img src="https://user-images.githubusercontent.com/48747805/58575411-f2a58480-827c-11e9-99d3-4426e8cb5e6b.png" width="50%"></img>
 
 (2) 블록의 행렬을 입력한다
 
-<img src="https://user-images.githubusercontent.com/48747805/58545629-9c195580-823e-11e9-8553-aedcf396a066.png" width="50%"></img>
-<img src="https://user-images.githubusercontent.com/48747805/58545632-9d4a8280-823e-11e9-8f85-3a9b604f6942.png" width="50%"></img>
+<img src="https://user-images.githubusercontent.com/48747805/58575665-89724100-827d-11e9-9524-4ee7f3a4ffa6.png" width="50%"></img>
+<img src="https://user-images.githubusercontent.com/48747805/58575604-5e87ed00-827d-11e9-9e4a-4bd0708a45e0.PNG" width="50%"></img>
 
 (3) 블록을 열고 싶으면 1을, 깃발로 표시·깃발을 해지하는 경우 2를 입력한다. 
 
-<img src="https://user-images.githubusercontent.com/48747805/58545635-9f144600-823e-11e9-9b89-c2ceee9fe861.png" width="50%"></img>
+<img src="https://user-images.githubusercontent.com/48747805/58575801-d1916380-827d-11e9-9d3a-c59d4e72c67a.PNG" width="50%"></img>
 
 (4) 지뢰가 아니라면 주변 8칸에 있는 지뢰의 수가 표시된다
 
-<img src="https://user-images.githubusercontent.com/48747805/58545638-a0457300-823e-11e9-9c43-4bb48709e272.png" width="50%"></img>
+<img src="https://user-images.githubusercontent.com/48747805/58575805-d2c29080-827d-11e9-8883-0dc94847977d.png" width="50%"></img>
 
 (5) 위의 과정을 반복하여 지뢰를 제외한 모든 블록을 열면 최종적으로 게임에서 승리한다.
 
