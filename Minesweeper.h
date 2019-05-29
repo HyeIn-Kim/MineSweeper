@@ -1,4 +1,4 @@
-#ifndef _MINESWEEPER_H
+﻿#ifndef _MINESWEEPER_H
 #define _MINESWEEPER_H
 
 #include <Windows.h>

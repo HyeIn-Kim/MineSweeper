@@ -1,7 +1,11 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "Minesweeper.h"
+
+/*
+ * 한글 주석을 테스트합니다.
+ */
 
 int main() {
 	while(IsGameReset()){

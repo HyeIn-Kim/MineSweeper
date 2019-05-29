@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "Minesweeper.h"
 #pragma warning (disable:4996)
 
