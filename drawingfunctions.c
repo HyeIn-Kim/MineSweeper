@@ -49,10 +49,10 @@ void DrawBoard() {
 
 void IntroShow() {
 
-	printf("\A1\E8\A2\D9      \A2֡\E8 \A2ââ\C3 \A2\B9     \A2\B7 \A1ߡߡߡ\DF\n");
-	printf("\A1\E8\A2\D9      \A2֡\E8   \A2\C3   \A2\B9\A2\B9   \A2\B7 \A1\DF\n");
-	printf("\A1\E8 \A2\D9    \A2\D6 \A1\E8   \A2\C3   \A2\B9 \A2\B9  \A2\B7 \A1ߡߡߡ\DF\n");
-	printf("\A1\E8  \A2\D9  \A2\D6  \A1\E8   \A2\C3   \A2\B9  \A2\B7 \A2\B7 \A1\DF\n");
-	printf("\A1\E8   \A2٢\D6   \A1\E8 \A2ââ\C3 \A2\B9   \A2\B7\A2\B7 \A1ߡߡߡ\DF\n\n");
+	printf("★★    ★★  ★★★  ★★    ★  ★★★★★\n");
+	printf("★★    ★★    ★    ★ ★   ★  ★\n");
+	printf("★ ★  ★ ★    ★    ★  ★  ★  ★★★★★\n");
+	printf("★  ★★  ★    ★    ★   ★ ★  ★\n");
+	printf("★  ★★  ★  ★★★  ★    ★★  ★★★★★");
 
 }
