@@ -1,10 +1,9 @@
-﻿#include <stdio.h>
-#include "Minesweeper.h"
+﻿#include "Minesweeper.h"
 
-void DrawBoard() {
+void DrawBoard(void) {
 	int i, j;
 	COORD pos;
-	setCurrentCursorPos(OFFSET_X, OFFSET_Y);
+	SetCurrentCursorPos(OFFSET_X, OFFSET_Y);
 
 	for (i = 0; i < boardRows; i++) {
 
@@ -13,7 +12,7 @@ void DrawBoard() {
 		}
 
 		for (j = 0; j < boardCols; j++) {
-			pos = getCurrentCursorPos();
+			pos = GetCurrentCursorPos();
 
 			switch (my_Board[i][j].statusBlock) {
 			case STATUS_OPEN:
@@ -37,17 +36,17 @@ void DrawBoard() {
 				break;
 			}
 
-			setCurrentCursorPos(pos.X + 4, pos.Y);
+			SetCurrentCursorPos(pos.X + 4, pos.Y);
 		}
 
 		printf("\n");
-		pos = getCurrentCursorPos();
+		pos = GetCurrentCursorPos();
 
-		setCurrentCursorPos(pos.X + OFFSET_X, pos.Y + 1);
+		SetCurrentCursorPos(pos.X + OFFSET_X, pos.Y + 1);
 	}
 }
 
-void IntroShow() {
+void IntroShow(void) {
 
 	printf("★★    ★★  ★★★  ★★    ★  ★★★★★\n");
 	printf("★★    ★★    ★    ★ ★   ★  ★\n");

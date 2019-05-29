@@ -1,9 +1,8 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
+﻿#include <stdlib.h>
 #include <time.h>
 #include "Minesweeper.h"
 
-void MineAllocate() {
+void MineAllocate(void) {
 	const double mineRate = 0.15;
 	int mineNum = (boardRows * boardCols) * mineRate;
 	int allocateRow;
@@ -25,10 +24,8 @@ void MineAllocate() {
 	}
 }
 
-
-
 //HACK: maybe can divide into subfunction
-int IsVictory() {
+int IsVictory(void) {
 	int i, j;
 	int checkvictory = 1; //initial->victory
 
@@ -55,15 +52,15 @@ int IsVictory() {
 	return checkvictory;
 }
 
-void CntMine(int row, int col) {
+void CntMine(int _row, int _col) {
 	int cnt = 0;
 	int checkrow, checkcol;
 
-	for (checkrow = row - 1; checkrow <= row + 1; checkrow++) {
-		if (checkrow >= 0 && checkrow < boardRows) {
+	for (checkrow = _row - 1; checkrow <= _row + 1; checkrow++) {
+		if (CheckRowsinGame(checkrow)) {
 
-			for (checkcol = col - 1; checkcol <= col + 1; checkcol++) {
-				if (checkcol >= 0 && checkcol < boardCols) {
+			for (checkcol = _col - 1; checkcol <= _col + 1; checkcol++) {
+				if (CheckColsinGame(checkcol)) {
 
 					if (my_Board[checkrow][checkcol].statusMine == MINE) {
 						cnt++;
@@ -74,15 +71,15 @@ void CntMine(int row, int col) {
 		}
 	}
 
-	my_Board[row][col].cntNearMine = cnt;
+	my_Board[_row][_col].cntNearMine = cnt;
 
 	if (cnt == 0) {
 
-		for (checkrow = row - 1; checkrow <= row + 1; checkrow++) {
-			if (checkrow >= 0 && checkrow < boardRows) {
+		for (checkrow = _row - 1; checkrow <= _row + 1; checkrow++) {
+			if (CheckRowsinGame(checkrow)) {
 
-				for (checkcol = col - 1; checkcol <= col + 1; checkcol++) {
-					if (checkcol >= 0 && checkcol < boardCols) {
+				for (checkcol = _col - 1; checkcol <= _col + 1; checkcol++) {
+					if (CheckColsinGame(checkcol)) {
 
 						if (my_Board[checkrow][checkcol].statusBlock == STATUS_CLOSE) {
 							my_Board[checkrow][checkcol].statusBlock = STATUS_OPEN;
@@ -96,7 +93,7 @@ void CntMine(int row, int col) {
 	}
 }
 
-int OpenBlock() {
+int OpenBlock(void) {
 	if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
 
 		if (my_Board[row][col].statusMine == MINE) {
@@ -115,7 +112,7 @@ int OpenBlock() {
 	return 0;
 }
 
-void FlagBlock() {
+void FlagBlock(void) {
 	if (my_Board[row][col].statusBlock == STATUS_FLAG) {
 		my_Board[row][col].statusBlock = STATUS_CLOSE;
 	}
@@ -130,42 +127,58 @@ void FlagBlock() {
 
 }
 
-void Play() {
+void OpenAllBlock(void) {
+	int i, j;
+
+	for (i = 0; i < boardRows; i++) {
+		for (j = 0; j < boardCols; j++) {
+			my_Board[i][j].statusBlock = STATUS_OPEN;
+		}
+	}
+
+}
+
+void Play(void) {
 	int init = 0;
 	int action;
 	COORD pos;
-	COORD firstquarypos;
-	COORD secondquarypos;
+	COORD currentPos;
 
 	do {
+
 		printf("\n");
 		DrawBoard();
-		firstquarypos = getCurrentCursorPos();
+		currentPos = GetCurrentCursorPos();
 
 		do {
-			setCurrentCursorPos(firstquarypos.X, firstquarypos.Y);
-			printf("\nPlease Enter Rows 0~%d / Cols 0~%d: ", boardRows - 1, boardCols - 1);
-			pos = getCurrentCursorPos();
-			printf("        ");
-			setCurrentCursorPos(pos.X, pos.Y);
-			scanf_s(" %d %d", &row, &col);
 
-		} while (!checkRowsinGame(row) || !checkColsinGame(col));
+			SetCurrentCursorPos(currentPos.X, currentPos.Y);
+			printf("\nPlease Enter Rows 1~%d / Cols 1~%d: ", boardRows, boardCols);
+			pos = GetCurrentCursorPos();
+			printf("        ");
+			SetCurrentCursorPos(pos.X, pos.Y);
+			scanf(" %d %d", &row, &col);
+
+			row = row - 1;
+			col = col - 1;
+
+		} while (!CheckRowsinGame(row) || !CheckColsinGame(col));
 
 		if (init == 0) {
-			MineAllocate(row, col);
+			MineAllocate();
 			init = 1;
 		}
 
-		secondquarypos = getCurrentCursorPos();
+		currentPos = GetCurrentCursorPos();
 
 		do {
-			setCurrentCursorPos(secondquarypos.X, secondquarypos.Y);
+
+			SetCurrentCursorPos(currentPos.X, currentPos.Y);
 			printf("\nSelect your action (1: Open Block / 2: Flag):");
-			pos = getCurrentCursorPos();
+			pos = GetCurrentCursorPos();
 			printf("        ");
-			setCurrentCursorPos(pos.X, pos.Y);
-			scanf_s(" %d", &action);
+			SetCurrentCursorPos(pos.X, pos.Y);
+			scanf(" %d", &action);
 
 		} while (!ActionInRange(action));
 
@@ -194,17 +207,5 @@ void Play() {
 	DrawBoard();
 
 	printf("You Win!\n");
-
-}
-
-
-void OpenAllBlock() {
-	int i, j;
-
-	for (i = 0; i < boardRows; i++) {
-		for (j = 0; j < boardCols; j++) {
-			my_Board[i][j].statusBlock = STATUS_OPEN;
-		}
-	}
 
 }

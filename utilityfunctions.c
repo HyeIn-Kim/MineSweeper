@@ -1,24 +1,23 @@
-﻿#include <stdio.h>
-#include "Minesweeper.h"
+﻿#include "Minesweeper.h"
 #pragma warning (disable:4996)
 
-int checkRows() {
+int CheckRows(void) {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);
 }
 
-int checkCols() {
+int CheckCols(void) {
 	return (boardCols >= MINBOARD && boardCols <= MAXBOARD);
 }
 
-int checkRowsinGame(int currentRow) {
+int CheckRowsinGame(int currentRow) {
 	return (currentRow >= 0 && currentRow < boardRows);
 }
 
-int checkColsinGame(int currentCol) {
+int CheckColsinGame(int currentCol) {
 	return (currentCol >= 0 && currentCol < boardCols);
 }
 
-int IsGameReset(){
+int IsGameReset(void){
 	static int flag = 0;
 	char user;
 	COORD pos;
@@ -29,11 +28,11 @@ int IsGameReset(){
 		flag = 1; 
 		return 1;
 	}
-	pos = getCurrentCursorPos();
+	pos = GetCurrentCursorPos();
 
 	while(user != 'y' && user != 'Y' && user != 'n' && user != 'N') {
 
-		setCurrentCursorPos(pos.X, pos.Y);
+		SetCurrentCursorPos(pos.X, pos.Y);
 		
 		getchar();
 
@@ -65,13 +64,13 @@ int ActionInRange(int action) {
 		
 }
 
-void setCurrentCursorPos(int x, int y) {
+void SetCurrentCursorPos(int x, int y) {
 	COORD pos = { x, y };
 
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-COORD getCurrentCursorPos(void) {
+COORD GetCurrentCursorPos(void) {
 	COORD curPoint;
 	CONSOLE_SCREEN_BUFFER_INFO curInfo;
 

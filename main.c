@@ -1,37 +1,34 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "Minesweeper.h"
+﻿#include "Minesweeper.h"
 
-/*
- * 한글 주석을 테스트합니다.
+/**
+ * 머리 주석
  */
 
-int main() {
+int main(void) {
 	while(IsGameReset()){
 		boardRows = 0;
 		boardCols = 0;
-		setBoardSize();
+		SetBoardSize();
 		InitBoard();
 		Play();
 	}
 
 }
 
-void setBoardSize() {
+void SetBoardSize(void) {
 	COORD pos;
 	IntroShow();
 
-	while (!checkRows() || !checkCols()) {
+	while (!CheckRows() || !CheckCols()) {
 
-		setCurrentCursorPos(0, 7);
+		SetCurrentCursorPos(0, 7);
 		printf("%d~%d Please enter rows, cols:", MINBOARD, MAXBOARD); 
 
-		pos = getCurrentCursorPos();
+		pos = GetCurrentCursorPos();
 		printf("        ");
 
-		setCurrentCursorPos(pos.X, pos.Y);
-		scanf_s(" %d %d", &boardRows, &boardCols);
+		SetCurrentCursorPos(pos.X, pos.Y);
+		scanf(" %d %d", &boardRows, &boardCols);
 
 	}
 
@@ -39,7 +36,7 @@ void setBoardSize() {
 
 }
 
-void InitBoard(){
+void InitBoard(void){
 	int i, j;
 	for(i = 0; i < MAXBOARD; i++) {
 		for(j = 0; j < MAXBOARD; j++) {
@@ -58,5 +55,3 @@ void InitBoard(){
 		}
 	}
 }
-
-
