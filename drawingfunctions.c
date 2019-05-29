@@ -46,6 +46,13 @@ void DrawBoard(void) {
 	}
 }
 
+/**
+* 게임시작시 화면을 출력한다.
+*
+* @param void
+* @return 없음
+*/
+
 void IntroShow(void) {
 
 	printf("★★    ★★  ★★★  ★★    ★  ★★★★★\n");

@@ -1,5 +1,4 @@
 ﻿#include "Minesweeper.h"
-#pragma warning (disable:4996)
 
 int CheckRows(void) {
 	return (boardRows >= MINBOARD && boardRows <= MAXBOARD);
