@@ -138,29 +138,57 @@ void OpenAllBlock(void) {
 
 }
 
-void Play(void) {
-	int init = 0;
+void InputBoard(void) {
+	COORD pos;
+	COORD currentPos;
+
+	currentPos = GetCurrentCursorPos();
+	SetCurrentCursorPos(currentPos.X, currentPos.Y);
+
+	printf("\nPlease Enter Rows 1~%d / Cols 1~%d:", boardRows, boardCols);
+	pos = GetCurrentCursorPos();
+	printf("        \n\n");
+	printf("                                                   ");
+	SetCurrentCursorPos(pos.X, pos.Y);
+	scanf(" %d %d", &row, &col);
+
+	row = row - 1;
+	col = col - 1;
+
+	SetCurrentCursorPos(currentPos.X, currentPos.Y);
+}
+
+int InputAction(void) {
 	int action;
 	COORD pos;
 	COORD currentPos;
+
+	currentPos = GetCurrentCursorPos();
+	SetCurrentCursorPos(currentPos.X, currentPos.Y);
+
+	printf("\n\n\nSelect your action (1: Open Block / 2: Flag):");
+	pos = GetCurrentCursorPos();
+	printf("        ");
+	SetCurrentCursorPos(pos.X, pos.Y);
+
+	scanf(" %d", &action);
+	SetCurrentCursorPos(currentPos.X, currentPos.Y);
+
+	return action;
+}
+
+void Play(void) {
+	int init = 0;
+	int action;
 
 	do {
 
 		printf("\n");
 		DrawBoard();
-		currentPos = GetCurrentCursorPos();
 
 		do {
 
-			SetCurrentCursorPos(currentPos.X, currentPos.Y);
-			printf("\nPlease Enter Rows 1~%d / Cols 1~%d: ", boardRows, boardCols);
-			pos = GetCurrentCursorPos();
-			printf("        ");
-			SetCurrentCursorPos(pos.X, pos.Y);
-			scanf(" %d %d", &row, &col);
-
-			row = row - 1;
-			col = col - 1;
+			InputBoard();
 
 		} while (!CheckRowsinGame(row) || !CheckColsinGame(col));
 
@@ -169,16 +197,9 @@ void Play(void) {
 			init = 1;
 		}
 
-		currentPos = GetCurrentCursorPos();
-
 		do {
 
-			SetCurrentCursorPos(currentPos.X, currentPos.Y);
-			printf("\nSelect your action (1: Open Block / 2: Flag):");
-			pos = GetCurrentCursorPos();
-			printf("        ");
-			SetCurrentCursorPos(pos.X, pos.Y);
-			scanf(" %d", &action);
+			action = InputAction();
 
 		} while (!ActionInRange(action));
 

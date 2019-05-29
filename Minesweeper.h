@@ -73,6 +73,8 @@ void CntMine(int, int);
 int OpenBlock(void);
 void FlagBlock(void);
 void OpenAllBlock(void);
+void InputBoard(void);
+int InputAction(void);
 void Play(void);
 
 /* utilityfunctions.c */
