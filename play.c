@@ -215,7 +215,7 @@ void InputBoard(void) {
 	printf("                                                   ");
 	SetCurrentCursorPos(pos.X, pos.Y);
 	scanf(" %d %d", &row, &col);
-
+	getchar();
 	/* 배열이므로 입력받은 행과 열에서 1을 뺀다. */
 	row = row - 1;
 	col = col - 1;
@@ -246,6 +246,7 @@ int InputAction(void) {
 	SetCurrentCursorPos(pos.X, pos.Y);
 
 	scanf(" %d", &action);
+	getchar();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 	/* 행동을 반환한다. */
 	return action;

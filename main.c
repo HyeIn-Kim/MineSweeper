@@ -60,6 +60,7 @@ void SetBoardSize(void) {
 		printf("        ");
 		SetCurrentCursorPos(pos.X, pos.Y);
 		scanf(" %d %d", &boardRows, &boardCols);
+		getchar();
 
 	}
 	/* 화면을 비우기 위해 호출 */
