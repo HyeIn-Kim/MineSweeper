@@ -40,15 +40,14 @@ int main(void) {
 
 /**  
 * 사용자에게 행렬의 크기를 입력 받는 함수
-* 최소값과 최대값 사이의 수를 입력할 때까지 반복 
+* 최소값과 최대값 사이의 수를 입력할 때까지 반복
+*
 * @param void
 * @return void 
 * @exception 숫자가 아닌 문자를 입력하는 경우 무한 루프되는 현상 발생 
 */
-
-
 void SetBoardSize(void) {
-	COORD pos;	/* 현재 커서 위치를 저장 */
+	COORD pos;					// 현재 커서 위치를 저장
 	IntroShow();
 	/* 입력한 행렬 크기가 범위 내의 값을 가질 때까지 반복 */
 	while (!CheckRows() || !CheckCols()) {
@@ -71,10 +70,10 @@ void SetBoardSize(void) {
 /** 
 * 사용자에게 입력 받은 행렬 크기만큼 게임판을 초기화하는 함수 
 * 블록의 상태, 인접한 지뢰의 수, 지뢰 여부를 초기화
+*
 * @param void
-* @return void 
+* @return 없음
 */
-
 void InitBoard(void){
 	int i, j;
 	for(i = 0; i < MAXBOARD; i++) {

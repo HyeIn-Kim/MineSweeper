@@ -48,19 +48,19 @@
 
 /* ***** 구조체 ***** */
 typedef struct Board {
-	int statusBlock;    //블럭의 상태를 나타낸다. 열림, 닫힘, 깃발.
-	int statusMine;     //지뢰 여부를 나타낸다.
-	int cntNearMine;    //해당 칸을 기준으로 3x3에 지뢰가 몇 개인지를 나타낸다.
+	int statusBlock;    // 블럭의 상태를 나타낸다. 열림, 닫힘, 깃발.
+	int statusMine;     // 지뢰 여부를 나타낸다.
+	int cntNearMine;    // 해당 칸을 기준으로 3x3에 지뢰가 몇 개인지를 나타낸다.
 } Board;                //                  ○ ○ ○
                         //                  ○ ■ ○
                         //                  ○ ○ ○
 
 /* ***** 전역 변수 ***** */
 Board my_Board[MAXBOARD][MAXBOARD];
-int boardRows;          //유저가 입력한 열 수
-int boardCols;          //유저가 입력한 행 수
-int row;                //유저가 선택한 열
-int col;                //유저가 선택한 행
+int boardRows;          // 유저가 입력한 열 수
+int boardCols;          // 유저가 입력한 행 수
+int row;                // 유저가 선택한 열
+int col;                // 유저가 선택한 행
 
 /* ***** 함수 ***** */
 /* main.c */

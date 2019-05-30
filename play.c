@@ -8,9 +8,8 @@
 * @param void
 * @return 없음
 */
-
 void MineAllocate(void) {
-	const double mineRate = 0.15; /* 지뢰 비율 */
+	const double mineRate = 0.15;	// 지뢰 비율
 	int mineNum = (boardRows * boardCols) * mineRate;
 	int allocateRow;
 	int allocateCol;
@@ -24,7 +23,7 @@ void MineAllocate(void) {
 		allocateRow = rand() % boardRows;
 		allocateCol = rand() % boardCols;
 
-		/* 지뢰가 없는 칸일 경우 지뢰를 배치한다*/
+		/* 지뢰가 없는 칸일 경우 지뢰를 배치한다 */
 		if (my_Board[allocateRow][allocateCol].statusMine == NORMAL) {
 			if (allocateRow != row || allocateCol != col) {
 				my_Board[allocateRow][allocateCol].statusMine = MINE;
@@ -42,12 +41,11 @@ void MineAllocate(void) {
 * @return 승리일 경우 1, 승리가 아닐 경우 0
 * @exception 검사하는 칸이 게임판 내부의 칸이 아닐 경우 오류메시지 반환
 */
-
 int IsVictory(void) {
 	int i, j;
 	int checkvictory = 1; //initial->victory
 
-						  /* 승리시 checkvictory=1인 상태로 반복문 종료 */
+						  /* 승리시 checkvictory = 1인 상태로 반복문 종료 */
 	for (i = 0; i < boardRows; i++) {
 		for (j = 0; j < boardCols; j++) {
 
@@ -80,7 +78,6 @@ int IsVictory(void) {
 * @param int row, int col
 * @return 인접 지뢰 개수
 */
-
 void CntMine(int _row, int _col) {
 	int cnt = 0;
 	int checkrow, checkcol;
@@ -132,7 +129,6 @@ void CntMine(int _row, int _col) {
 * @param void
 * @return 지뢰가 있을 경우 1, 지뢰가 없을 경우 0
 */
-
 int OpenBlock(void) {
 	if (my_Board[row][col].statusBlock == STATUS_CLOSE) {
 
@@ -153,13 +149,12 @@ int OpenBlock(void) {
 }
 
 /**
-* 게임판의 선택한 칸에 깃발 꽂는다.
+* 게임판의 선택한 칸에 깃발을 꽂는다.
 *
 * @param void
 * @return 없음
 
 */
-
 void FlagBlock(void) {
 	/* 선택한 칸에 깃발이 꽂혀있는 경우 깃발을 해재한다. */
 	if (my_Board[row][col].statusBlock == STATUS_FLAG) {
@@ -178,7 +173,7 @@ void FlagBlock(void) {
 }
 
 /**
-* 게임판의 모든 블록을 STATUS_OPEN상태로 만든다.
+* 게임판의 모든 블록을 STATUS_OPEN 상태로 만든다.
 *
 * @param void
 * @return 없음
@@ -208,7 +203,7 @@ void InputBoard(void) {
 	currentPos = GetCurrentCursorPos();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 
-	/* 입력을 받겠다는 문자열을 출력하고 선택할 칸의 행과 열을 입력을 받는다*/
+	/* 입력을 받겠다는 문자열을 출력하고 선택할 칸의 행과 열을 입력받는다 */
 	printf("\nPlease Enter Rows 1~%d / Cols 1~%d:", boardRows, boardCols);
 	pos = GetCurrentCursorPos();
 	printf("        \n\n");
@@ -216,11 +211,11 @@ void InputBoard(void) {
 	SetCurrentCursorPos(pos.X, pos.Y);
 	scanf(" %d %d", &row, &col);
 	getchar();
-	/* 배열이므로 입력받은 행과 열에서 1을 뺀다. */
+	/* 배열이므로 입력받은 행과 열에서 1을 뺀다 */
 	row = row - 1;
 	col = col - 1;
 
-	/* 커서의 위치를 입력 받겠다는 문자열 뒤로 위치시킨다*/
+	/* 커서의 위치를 시작 위치로 되돌린다 */
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 }
 
@@ -228,18 +223,19 @@ void InputBoard(void) {
 * 게임에서의 행동을 입력받는다.
 *
 * @param void
-* @return 칸 열기일 경우 1반환, 깃발꽂기일 경우 2 반환
+* @return 칸 열기일 경우 1 반환, 깃발 꽂기일 경우 2 반환
+* @exception 잘못된 값을 입력되었을 경우 잘못된 값이 그대로 반환된다.
 */
 int InputAction(void) {
 	int action;
 	COORD pos;
 	COORD currentPos;
 
-	/* 입력을 받겠다는 문자열을 출력하고 선택할 칸의 행과 열을 입력을 받는다*/
+	/* 커서의 시작위치를 저장한다 */
 	currentPos = GetCurrentCursorPos();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
 
-	/* 입력을 받겠다는 문자열을 출력하고 선택할 행동을 입력을 받는다*/
+	/* 입력을 받겠다는 문자열을 출력하고 선택할 행동을 입력을 받는다 */
 	printf("\n\n\nSelect your action (1: Open Block / 2: Flag):");
 	pos = GetCurrentCursorPos();
 	printf("        ");
@@ -248,7 +244,8 @@ int InputAction(void) {
 	scanf(" %d", &action);
 	getchar();
 	SetCurrentCursorPos(currentPos.X, currentPos.Y);
-	/* 행동을 반환한다. */
+
+	/* 행동을 반환한다 */
 	return action;
 }
 
@@ -290,8 +287,8 @@ void Play(void) {
 		} while (!ActionInRange(action));
 
 		/* 각각의 행동에 맞게 동작
-		*1. 칸 열기
-		*2. 깃발꽂기
+		* 1. 칸 열기
+		* 2. 깃발꽂기
 		*/
 		switch (action) {
 		case 1:
@@ -306,7 +303,6 @@ void Play(void) {
 		case 2:
 			FlagBlock();
 			break;
-
 		}
 
 	} while (!IsVictory());

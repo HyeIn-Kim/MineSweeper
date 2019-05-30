@@ -3,15 +3,16 @@
 
 /** 
 * 게임판을 그리는 함수
-* 게임이 진행되는 동안 play 함수 내에서 꾸준히 호출된다
-* 블록의 상태를 시각적으로 나타내는 일을 한다
+* 게임이 진행되는 동안 play 함수 내에서 꾸준히 호출된다.
+* 블록의 상태를 시각적으로 나타내는 일을 한다.
+*
 * @param void
-* @return void 
+* @return 없음
 */
-
 void DrawBoard(void) {
 	int i, j;
-	COORD pos;	/* 현재 커서의 위치 */
+	COORD pos;				// 현재 커서 위치를 저장
+
 	/* 호출시 설정한 위치로 커서를 옮긴다. 게임판은 고정된 위치에서 그려진다 */
 	SetCurrentCursorPos(OFFSET_X, OFFSET_Y);
 
@@ -47,25 +48,25 @@ void DrawBoard(void) {
 			default:
 				break;
 			}
-			/* 커서를 오른쪽으로 두 칸 옮긴다. x축의 이동 단위는 2 */
 
+			/* 커서를 오른쪽으로 두 칸 옮긴다. x축의 이동 단위는 2 */
 			SetCurrentCursorPos(pos.X + 4, pos.Y);
 		}
 
 		printf("\n");
 		pos = GetCurrentCursorPos();
+
 		/* 커서를 아래쪽으로 한 칸 옮긴다. y축의 이동 단위는 1 */
 		SetCurrentCursorPos(pos.X + OFFSET_X, pos.Y + 1);
 	}
 }
 
 /**
-* 게임시작시 화면을 출력한다.
+* 게임 시작시 화면을 출력한다.
 *
 * @param void
 * @return 없음
 */
-
 void IntroShow(void) {
 
 	printf("★★    ★★  ★★★  ★★    ★  ★★★★★\n");
